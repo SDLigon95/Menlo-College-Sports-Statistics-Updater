@@ -9,36 +9,35 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 win = Tk()
-win.geometry('575x357') # Size 200, 200
+win.geometry('575x357')  # Size 200, 200
 choice = 0
 
-class UI(Frame):
 
+class UI(Frame):
     oldDocName = []
     newDocDirectory = []
 
-    def constructButtons(self,choice):
+    def constructButtons(self, choice):
         self.openButton = Button(win, text="Open Word Document", command=self.openFile, background='blue',
                                  fg='white', width=45, height=4)
         self.openButton.pack()
         self.saveAsButton = Button(win, text="Save As", command=self.saveFileAs, background='red', fg='white',
-                                    width=45,
-                                    height=4)
+                                   width=45,
+                                   height=4)
         self.saveAsButton.pack()
-        if (choice==1):
+        if (choice == 1):
             self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseball,
                                         background='green', fg='white', width=45, height=4)
-        if (choice==2):
+        if (choice == 2):
             self.convertButton = Button(win, text="Convert Women's Soccer Stats", command=self.convertWomanSoccer,
                                         background='green', fg='white', width=45, height=4)
 
-        if (choice==3):
+        if (choice == 3):
             self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball,
                                         background='green', fg='white', width=45, height=4)
         self.convertButton.pack()
 
     def destroyButtons(self):
-
 
         self.openButton.destroy()
         self.saveAsButton.destroy()
@@ -52,11 +51,10 @@ class UI(Frame):
         self.volleyballOption.pack(fill=X)
         self.pack()
 
-    #Create UI
+    # Create UI
     def __init__(self):
-        #Open and Convert button
+        # Open and Convert button
         Frame.__init__(self)
-
 
         self.basketballOption = Button(win, text="Baseball", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
@@ -65,7 +63,7 @@ class UI(Frame):
         self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
         self.volleyballOption.pack(fill=X)
         self.pack()
-        
+
     def baseballMenu(self):
         # self.tk_menuBar.add_command(label="Open", command=self.openFile)
         # menubar.add_command(label="Quit!", command=root.quit)
@@ -89,7 +87,7 @@ class UI(Frame):
         # Background and Pack
         self.configure(background="white")
         self.pack()
-    
+
     def womanSoccerMenu(self):
         # self.tk_menuBar.add_command(label="Open", command=self.openFile)
         # menubar.add_command(label="Quit!", command=root.quit)
@@ -138,8 +136,7 @@ class UI(Frame):
         self.configure(background="white")
         self.pack()
 
-
-    #Grab file name and location from window
+    # Grab file name and location from window
     def openFile(self):
         global oldDocName
         oldDocName = askopenfilename(filetypes=(("Word files", "*.docx"),))
@@ -154,13 +151,13 @@ class UI(Frame):
             return
         print newDocDirectory
 
-    #Grabbing input to display in log window
+        # Grabbing input to display in log window
         # def write (self, txt):
         #     self.output.insert(END,str(txt))
         #     self.update_idletasks()
 
-    #Grabs input from website and compares names found in original document.
-    #Scores will get updated based on which names are found.
+    # Grabs input from website and compares names found in original document.
+    # Scores will get updated based on which names are found.
     def convertBaseball(self):
         # Reading docx file
         import sys
@@ -178,7 +175,7 @@ class UI(Frame):
         content = []
         flag = 0
         lastNameCounter = 0
-        #Import library for reading website
+        # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
         import pandas as pd
@@ -200,28 +197,27 @@ class UI(Frame):
                 names.append(name)
                 GP = col[1].find(text=True)
                 #
-                #average = field 1
+                # average = field 1
                 average = col[3].find(text=True)
-                #OB = field 2
+                # OB = field 2
                 OB = col[17].find(text=True)
-                #SLG = field 3
+                # SLG = field 3
                 SLG = col[12].find(text=True)
                 #
                 avg_scores.append(average)
                 R = col[5].find(text=True)
-                #2B
+                # 2B
                 TwoB = col[7].find(text=True)
-                #3B
+                # 3B
                 ThreeB = col[8].find(text=True)
-                #HR
+                # HR
                 HR = col[9].find(text=True)
-                #BB
+                # BB
                 BB = col[13].find(text=True)
-                #K not found
-                #SB
+                # K not found
+                # SB
                 SB = col[20].find(text=True)
 
-                
                 try:
                     for row in working.rows:
                         for cell in row.cells:
@@ -248,8 +244,8 @@ class UI(Frame):
                                     continue
                                 if flag > 3:
                                     # print paragraph.text + '\n'
-                                   
-                                    
+
+
                                     if paragraph.text.__contains__('2B'):
                                         print '2B found'
                                         paragraph.text = "2B - " + TwoB
@@ -272,38 +268,37 @@ class UI(Frame):
                                     if paragraph.text.__contains__('SB'):
                                         print 'SB found'
                                         paragraph.text = "SB - " + SB
-                                    
-                                # EXPERIMENT FOR DUPLICATE NAMES
+
+                                        # EXPERIMENT FOR DUPLICATE NAMES
                                     # if paragraph.text == '3':
-                                    #     print '3 FOUND YAY!'   
+                                    #     print '3 FOUND YAY!'
 
                                     # if paragraph.text != (name.split(', ')[0]):
                                     #     lastNameCounter = lastNameCounter + 1
-                                    
+
                                     # if lastNameCounter >= 14:
                                     #     if paragraph.text != (name.split(', ')[0]):
                                     #         print "NONE!!"
                                     #     if paragraph.text == (name.split(', ')[0]):
                                     #         print "QQQQ!!"
-                                    
+
                                     if paragraph.text == (name.split(', ')[0]):
                                         # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
                                         # print lastNameCounter
                                         # lastNameCounter = 0
                                         flag = 0
                                         break
-                                        
-                                
+
                                 if paragraph.text == name.split(' ')[1]:
                                     flag = flag + 1
                                     # self.write(name + '\n')
                                     print paragraph.text
 
-                                    #scan has a dictionary of all the names found on the website
-                                    #the program will check whether or not a first name has already been recorded
-                                    #if it has, then the counter will go up from 1 to 2
-                                    #if the counter is more than 1, then the program will have to match the specific name
-                                    #from the document with a matching number
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
                                     scan = dic.keys()
                                     for index in scan:
                                         if index.__contains__(name.split(' ')[1]):
@@ -327,17 +322,16 @@ class UI(Frame):
             if dic[name] > 1:
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
-            
-        
+
         # for key, value in dic.items():
-#             print key + " => " + value
+        #             print key + " => " + value
         # print names
         # print row_counter
         document.add_table(1, 2, style=None)
-        document.save(newDocDirectory+"/Updated File.docx")
+        document.save(newDocDirectory + "/Updated File.docx")
         sys.exit()
         # self.write("Document is fully updated\n")
-    
+
     def convertWomanSoccer(self):
         # Reading docx file
         import sys
@@ -355,7 +349,7 @@ class UI(Frame):
         content = []
         flag = 0
         lastNameCounter = 0
-        #Import library for reading website
+        # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
         import pandas as pd
@@ -375,13 +369,13 @@ class UI(Frame):
             if len(col) == 16:
                 name = col[1].find(text=True)
                 names.append(name)
-                #col[0]= Player Number
+                # col[0]= Player Number
                 GP = col[2].find(text=True)
-                #average = field 1
+                # average = field 1
                 GS = col[3].find(text=True)
-                #OB = field 2
+                # OB = field 2
                 G = col[4].find(text=True)
-                #SLG = field 3
+                # SLG = field 3
                 A = col[5].find(text=True)
                 #
 
@@ -397,7 +391,6 @@ class UI(Frame):
 
                 PKM = col[12].find(text=True)
 
-                
                 try:
                     for row in working.rows:
                         for cell in row.cells:
@@ -458,20 +451,20 @@ class UI(Frame):
                                     if paragraph.text.__contains__('PKM'):
                                         print 'PKM found'
                                         paragraph.text = "PKM - " + PKM
-                                    
-                                # EXPERIMENT FOR DUPLICATE NAMES
+
+                                        # EXPERIMENT FOR DUPLICATE NAMES
                                     # if paragraph.text == '3':
-                                    #     print '3 FOUND YAY!'   
+                                    #     print '3 FOUND YAY!'
 
                                     # if paragraph.text != (name.split(', ')[0]):
                                     #     lastNameCounter = lastNameCounter + 1
-                                    
+
                                     # if lastNameCounter >= 14:
                                     #     if paragraph.text != (name.split(', ')[0]):
                                     #         print "NONE!!"
                                     #     if paragraph.text == (name.split(', ')[0]):
                                     #         print "QQQQ!!"
-                                    
+
                                     if paragraph.text == (name.split(', ')[0]):
                                         # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
                                         # print lastNameCounter
@@ -485,11 +478,11 @@ class UI(Frame):
                                     # self.write(name + '\n')
                                     print paragraph.text
 
-                                    #scan has a dictionary of all the names found on the website
-                                    #the program will check whether or not a first name has already been recorded
-                                    #if it has, then the counter will go up from 1 to 2
-                                    #if the counter is more than 1, then the program will have to match the specific name
-                                    #from the document with a matching number
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
                                     scan = dic.keys()
                                     for index in scan:
                                         if index.__contains__(name.split(' ')[1]):
@@ -504,7 +497,7 @@ class UI(Frame):
                                     # print paragraph.text[index + 1]
                 except IndexError:
                     print "list index out of range"
-            #GOALIE STATS
+            # GOALIE STATS
             if len(col) == 13:
                 name = col[1].find(text=True)
                 names.append(name)
@@ -635,7 +628,7 @@ class UI(Frame):
         print names
         print row_counter
         document.add_table(1, 2, style=None)
-        document.save(newDocDirectory+"/Updated File.docx")
+        document.save(newDocDirectory + "/Updated File.docx")
         # self.write("Document is fully updated\n")
 
 
@@ -1006,7 +999,7 @@ class UI(Frame):
                                 if switch == True:
                                     continue
                                 dic[name] = count
-                                
+
                             if paragraph.text == name.split(', ')[1]:
                                 print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                 flag = flag + 1
@@ -1052,5 +1045,7 @@ class UI(Frame):
         document.save(newDocDirectory + "/Updated File.docx")
         sys.exit()
         # self.write("Document is fully updated\n")
+
+
 if __name__ == '__main__':
     UI().mainloop()
