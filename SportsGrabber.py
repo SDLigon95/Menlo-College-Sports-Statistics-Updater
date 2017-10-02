@@ -290,6 +290,8 @@ class UI(Frame):
                                         break
 
                                 if paragraph.text == name.split(' ')[1]:
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
                                     flag = flag + 1
                                     # self.write(name + '\n')
                                     print paragraph.text
@@ -366,406 +368,150 @@ class UI(Frame):
         for row in table.find_all('tr')[1:]:
             col = row.find_all('td')
             row_counter = row_counter + 1
+            # if row_counter > 14:
+            #     break
             if len(col) == 16:
-                name = col[1].find(text=True)
-                names.append(name)
-                # col[0]= Player Number
-                GP = col[2].find(text=True)
-                # average = field 1
-                GS = col[3].find(text=True)
-                # OB = field 2
-                G = col[4].find(text=True)
-                # SLG = field 3
-                A = col[5].find(text=True)
-                #
-
-                pts = col[6].find(text=True)
-
-                SH = col[7].find(text=True)
-
-                SOG = col[8].find(text=True)
-
-                YC = col[9].find(text=True)
-
-                GWG = col[11].find(text=True)
-
-                PKM = col[12].find(text=True)
-
                 try:
-                    for row in working.rows:
-                        for cell in row.cells:
-                            for index, paragraph in enumerate(cell.paragraphs):
-                                content.append(paragraph.text)
-                                switch = False
+                    name = col[1].find('a', href=True)
+                    name = name.get('title')
+                    names.append(name.split(', ')[1])
+                    print name.split(', ')[1]
+
+                    GP = col[2].find(text=True)
+                    print "GP: " + GP
+
+                    #
+                    # average = field 1
+                    GS = col[3].find(text=True)
+                    print "GS: " + GS
+
+                    G = col[4].find(text=True)
+                    print "G: " + G
+
+                    A = col[5].find(text=True)
+                    print "A: " + A
+
+                    Pts = col[6].find(text=True)
+                    print "Pts: " + Pts
+
+                    SH = col[8].find(text=True)
+                    print "SH: " + SH
+
+                    SOG = col[9].find(text=True)
+                    print "SOG: " + SOG
+
+                    # avg_scores.append(average)
+
+                    YC = col[11].find(text=True)
+                    print "YC: " + YC
+
+                    GWG = col[13].find(text=True)
+                    print "GWG: " + GWG
+
+                    PKM = col[14].find(text=True)
+                    print "PKM: " + PKM
+
+                    try:
+                        print "TESTING"
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
                                 if flag == 1:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + G
+                                    print "G FOUND: " + G
                                     paragraph.text = G
                                     flag = flag + 1
                                     continue
                                 if flag == 2:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + SOG
-                                    paragraph.text = SOG
-                                    flag = flag + 1
-                                    continue
-                                # if flag == 3:
-                                #     # print "doc: " + paragraph.text
-                                #     # print "website: " + SLG
-                                #     paragraph.text = SLG
-                                #     flag = flag + 1
-                                #     continue
-                                if flag > 2:
-                                    if paragraph.text.__contains__('GP'):
-                                        print 'GP found'
-                                        paragraph.text = "GP - " + GP
-
-                                    if paragraph.text.__contains__('GS'):
-                                        print 'GS found'
-                                        paragraph.text = "GS - " + GS
-
-                                    if paragraph.text.__contains__('A'):
-                                        print 'A found'
-                                        paragraph.text = "HR - " + A
-
-                                    if paragraph.text.__contains__('pts'):
-                                        print 'pts found'
-                                        paragraph.text = "pts - " + pts
-
-                                    if paragraph.text.__contains__('SH'):
-                                        print 'SH found'
-                                        paragraph.text = "SH - " + SH
-
-                                    if paragraph.text.__contains__('SOG'):
-                                        print 'SOG found'
-                                        paragraph.text = "SOG - " + SOG
-
-                                    if paragraph.text.__contains__('YC'):
-                                        print 'YC found'
-                                        paragraph.text = "YC - " + YC
-
-                                    if paragraph.text.__contains__('GWG'):
-                                        print 'GWG found'
-                                        paragraph.text = "GWG - " + GWG
-
-                                    if paragraph.text.__contains__('PKM'):
-                                        print 'PKM found'
-                                        paragraph.text = "PKM - " + PKM
-
-                                        # EXPERIMENT FOR DUPLICATE NAMES
-                                    # if paragraph.text == '3':
-                                    #     print '3 FOUND YAY!'
-
-                                    # if paragraph.text != (name.split(', ')[0]):
-                                    #     lastNameCounter = lastNameCounter + 1
-
-                                    # if lastNameCounter >= 14:
-                                    #     if paragraph.text != (name.split(', ')[0]):
-                                    #         print "NONE!!"
-                                    #     if paragraph.text == (name.split(', ')[0]):
-                                    #         print "QQQQ!!"
-
-                                    if paragraph.text == (name.split(', ')[0]):
-                                        # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
-                                        # print lastNameCounter
-                                        # lastNameCounter = 0
-                                        flag = 0
-                                        break
-                                    flag = flag + 1
-
-                                if paragraph.text == name.split(' ')[1]:
-                                    flag = flag + 1
-                                    # self.write(name + '\n')
-                                    print paragraph.text
-
-                                    # scan has a dictionary of all the names found on the website
-                                    # the program will check whether or not a first name has already been recorded
-                                    # if it has, then the counter will go up from 1 to 2
-                                    # if the counter is more than 1, then the program will have to match the specific name
-                                    # from the document with a matching number
-                                    scan = dic.keys()
-                                    for index in scan:
-                                        if index.__contains__(name.split(' ')[1]):
-                                            switch = True
-                                            count = count + 1
-                                            dic[name] = count
-                                            count = 1
-                                    if switch == True:
-                                        continue
-                                    dic[name] = count
-                                    # paragraph.text[index + 1] = '.555'
-                                    # print paragraph.text[index + 1]
-                except IndexError:
-                    print "list index out of range"
-            # GOALIE STATS
-            if len(col) == 13:
-                name = col[1].find(text=True)
-                names.append(name)
-                # col[0]= Player Number
-                GP = col[2].find(text=True)
-                # average = field 1
-                GS = col[3].find(text=True)
-                # OB = field 2
-                GA = col[5].find(text=True)
-                # SLG = field 3
-                GAAvg = col[6].find(text=True)
-                #
-
-                SV = col[7].find(text=True)
-
-                Pct = col[8].find(text=True)
-
-                W = col[9].find(text=True)
-
-                L = col[10].find(text=True)
-
-                T = col[11].find(text=True)
-
-                SHO = col[12].find(text=True)
-
-                try:
-                    for row in working.rows:
-                        for cell in row.cells:
-                            for index, paragraph in enumerate(cell.paragraphs):
-                                content.append(paragraph.text)
-                                switch = False
-                                if flag == 1:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + G
-                                    paragraph.text = GAAvg
-                                    flag = flag + 1
-                                    continue
-                                if flag == 2:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + SOG
-                                    paragraph.text = Pct
+                                    print "A FOUND: " + A
+                                    paragraph.text = A
                                     flag = flag + 1
                                     continue
                                 if flag == 3:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + SLG
-                                    paragraph.text = SHO
-                                    flag = flag + 1
-                                    continue
-                                if flag > 3:
-                                    if paragraph.text.__contains__('GA'):
-                                        print 'GA found'
-                                        paragraph.text = "GA - " + GA
-
-                                    if paragraph.text.__contains__('SV'):
-                                        print 'SV found'
-                                        paragraph.text = "SV - " + SV
-
-                                    if paragraph.text.__contains__('W'):
-                                        print 'W found'
-                                        paragraph.text = "HR - " + W
-
-                                    if paragraph.text.__contains__('L'):
-                                        print 'L found'
-                                        paragraph.text = "L - " + L
-
-                                    if paragraph.text.__contains__('SH'):
-                                        print 'SH found'
-                                        paragraph.text = "SH - " + SH
-
-                                    if paragraph.text.__contains__('T'):
-                                        print 'T found'
-                                        paragraph.text = "T - " + T
-
-                                    if paragraph.text.__contains__('YC'):
-                                        print 'YC found'
-                                        paragraph.text = "YC - " + YC
-
-
-                                        # EXPERIMENT FOR DUPLICATE NAMES
-                                    # if paragraph.text == '3':
-                                    #     print '3 FOUND YAY!'
-
-                                    # if paragraph.text != (name.split(', ')[0]):
-                                    #     lastNameCounter = lastNameCounter + 1
-
-                                    # if lastNameCounter >= 14:
-                                    #     if paragraph.text != (name.split(', ')[0]):
-                                    #         print "NONE!!"
-                                    #     if paragraph.text == (name.split(', ')[0]):
-                                    #         print "QQQQ!!"
-
-                                    if paragraph.text == (name.split(', ')[0]):
-                                        # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
-                                        # print lastNameCounter
-                                        # lastNameCounter = 0
-                                        flag = 0
-                                        break
-                                    flag = flag + 1
-
-                                if paragraph.text == name.split(' ')[1]:
-                                    flag = flag + 1
-                                    # self.write(name + '\n')
-                                    print paragraph.text
-
-                                    # scan has a dictionary of all the names found on the website
-                                    # the program will check whether or not a first name has already been recorded
-                                    # if it has, then the counter will go up from 1 to 2
-                                    # if the counter is more than 1, then the program will have to match the specific name
-                                    # from the document with a matching number
-                                    scan = dic.keys()
-                                    for index in scan:
-                                        if index.__contains__(name.split(' ')[1]):
-                                            switch = True
-                                            count = count + 1
-                                            dic[name] = count
-                                            count = 1
-                                    if switch == True:
-                                        continue
-                                    dic[name] = count
-                                    # paragraph.text[index + 1] = '.555'
-                                    # print paragraph.text[index + 1]
-                except IndexError:
-                    print "list index out of range"
-
-        print "almost done"
-        print dic
-        print names
-        print row_counter
-        document.add_table(1, 2, style=None)
-        document.save(newDocDirectory + "/Updated File.docx")
-        # self.write("Document is fully updated\n")
-
-
-        # Reading docx file
-        import sys
-        from docx import Document
-        document = Document(oldDocName)
-        tables = document.tables
-        section = []
-        i = 0
-        for table in tables:
-            section.append(table)
-        # document.save('MEN Game Notes Hitting_Updated.docx')
-        #
-        working = section[1]
-        # self.write("Reading document...\n")
-        content = []
-        flag = 0
-        lastNameCounter = 0
-        # Import library for reading website
-        from bs4 import BeautifulSoup
-        import urllib2
-        import pandas as pd
-        # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2017&team=9101"
-        page = urllib2.urlopen(url)
-        soup = BeautifulSoup(page, "html.parser")
-        table = soup.find("table", {"class": "gridViewReportBuilderWide"})
-        avg_scores = []
-        names = []
-        count = 1
-        dic = {}
-        row_counter = 0
-        for row in table.find_all('tr')[1:]:
-            col = row.find_all('td')
-            row_counter = row_counter + 1
-            if len(col) == 22:
-                name = col[0].find(text=True)
-                names.append(name)
-                GP = col[1].find(text=True)
-                #
-                # average = field 1
-                average = col[3].find(text=True)
-                # OB = field 2
-                OB = col[17].find(text=True)
-                # SLG = field 3
-                SLG = col[12].find(text=True)
-                #
-                avg_scores.append(average)
-                R = col[5].find(text=True)
-                # 2B
-                TwoB = col[7].find(text=True)
-                # 3B
-                ThreeB = col[8].find(text=True)
-                # HR
-                HR = col[9].find(text=True)
-                # BB
-                BB = col[13].find(text=True)
-                # K not found
-                # SB
-                SB = col[20].find(text=True)
-
-                try:
-                    for row in working.rows:
-                        for cell in row.cells:
-                            for index, paragraph in enumerate(cell.paragraphs):
-                                content.append(paragraph.text)
-                                switch = False
-                                if flag == 1:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + average
-                                    paragraph.text = average
-                                    flag = flag + 1
-                                    continue
-                                if flag == 2:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + OB
-                                    paragraph.text = OB
-                                    flag = flag + 1
-                                    continue
-                                if flag == 3:
-                                    # print "doc: " + paragraph.text
-                                    # print "website: " + SLG
-                                    paragraph.text = SLG
+                                    print "Pts FOUND: " + Pts
+                                    paragraph.text = Pts
                                     flag = flag + 1
                                     continue
                                 if flag > 3:
                                     # print paragraph.text + '\n'
 
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP found: ' + GP
+                                        paragraph.text = "GP-" + GP
 
-                                    if paragraph.text.__contains__('2B'):
-                                        print '2B found'
-                                        paragraph.text = "2B - " + TwoB
+                                    if paragraph.text.__contains__('GS-'):
+                                        print 'GS found: ' + GS
+                                        paragraph.text = "GS-" + GS
 
-                                    if paragraph.text.__contains__('3B'):
-                                        print '3B found'
-                                        paragraph.text = "3B - " + ThreeB
+                                    if paragraph.text.__contains__('SH-'):
+                                        print 'SH found: ' + SH
+                                        paragraph.text = "SH-" + SH
 
-                                    if paragraph.text.__contains__('HR'):
-                                        print 'HR found'
-                                        paragraph.text = "HR - " + HR
+                                    if paragraph.text.__contains__('SOG-'):
+                                        print 'SOG found: ' + SOG
+                                        paragraph.text = "SOG-" + SOG
 
-                                    if paragraph.text.__contains__('BB'):
-                                        print 'BB found'
-                                        paragraph.text = "BB - " + BB
+                                    if paragraph.text.__contains__('YC-'):
+                                        print 'YC found: ' + YC
+                                        paragraph.text = "YC-" + YC
 
-                                    if paragraph.text.__contains__('K'):
-                                        print 'K found'
+                                    if paragraph.text.__contains__('GWG-'):
+                                        print 'GWG found: ' + GWG
+                                        paragraph.text = "AST-" + GWG
 
-                                    if paragraph.text.__contains__('SB'):
-                                        print 'SB found'
-                                        paragraph.text = "SB - " + SB
-
-                                        # EXPERIMENT FOR DUPLICATE NAMES
-                                    # if paragraph.text == '3':
-                                    #     print '3 FOUND YAY!'
-
-                                    # if paragraph.text != (name.split(', ')[0]):
-                                    #     lastNameCounter = lastNameCounter + 1
-
-                                    # if lastNameCounter >= 14:
-                                    #     if paragraph.text != (name.split(', ')[0]):
-                                    #         print "NONE!!"
-                                    #     if paragraph.text == (name.split(', ')[0]):
-                                    #         print "QQQQ!!"
-
-                                    if paragraph.text == (name.split(', ')[0]):
-                                        # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
-                                        # print lastNameCounter
-                                        # lastNameCounter = 0
+                                    if paragraph.text.__contains__('PKM-'):
+                                        print 'PKM found: ' + PKM
+                                        paragraph.text = "PKM-" + PKM
                                         flag = 0
+                                        print "ROW COUNTER: " + str(row_counter)
+                                        document.save(newDocDirectory + "/Updated File.docx")
                                         break
 
-                                if paragraph.text == name.split(' ')[1]:
-                                    flag = flag + 1
-                                    # self.write(name + '\n')
-                                    print paragraph.text
+
+
+                                        # EXPERIMENT FOR DUPLICATE NAMES
+                                        # if paragraph.text == '3':
+                                        #     print '3 FOUND YAY!'
+
+                                        # if paragraph.text != (name.split(', ')[0]):
+                                        #     lastNameCounter = lastNameCounter + 1
+
+                                        # if lastNameCounter >= 14:
+                                        #     if paragraph.text != (name.split(', ')[0]):
+                                        #         print "NONE!!"
+                                        #     if paragraph.text == (name.split(', ')[0]):
+                                        #         print "QQQQ!!"
+
+                                        # if paragraph.text == (name.split(', ')[0]):
+                                        #     # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
+                                        #     # print lastNameCounter
+                                        #     # lastNameCounter = 0
+
+                                if name.split(', ')[1] == 'K.':
+                                    if paragraph.text == "Ka’imilani":
+                                        flag = flag + 1
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+
+                                if name.split(', ')[0] == '10 SCOTT':
+                                    print "SCOTT PASSED"
+                                    if paragraph.text == "Jaden":
+                                        flag = flag + 1
 
                                     # scan has a dictionary of all the names found on the website
                                     # the program will check whether or not a first name has already been recorded
@@ -774,18 +520,45 @@ class UI(Frame):
                                     # from the document with a matching number
                                     scan = dic.keys()
                                     for index in scan:
-                                        if index.__contains__(name.split(' ')[1]):
+                                        if index.__contains__(name.split(', ')[1]):
                                             switch = True
                                             count = count + 1
                                             dic[name] = count
                                             count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+
+                                if paragraph.text == name.split(', ')[1]:
+                                    print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                    flag = flag + 1
+                                    # self.write(name + '\n')
+                                    print paragraph.text
+                                    print "TEST2"
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
                                     if switch == True:
                                         continue
                                     dic[name] = count
                                     # paragraph.text[index + 1] = '.555'
                                     # print paragraph.text[index + 1]
-                except IndexError:
-                    print "list index out of range"
+                    except IndexError:
+                        print "list index out of range"
+                except:
+                    print "NoneType' object has no attribute 'get"
 
         print "almost done"
         # print dic.items()
@@ -804,6 +577,7 @@ class UI(Frame):
         document.save(newDocDirectory + "/Updated File.docx")
         sys.exit()
         # self.write("Document is fully updated\n")
+
 
     def convertVolleyball(self):
         # Reading docx file
