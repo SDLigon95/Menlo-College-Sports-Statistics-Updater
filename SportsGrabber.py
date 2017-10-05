@@ -31,8 +31,10 @@ class UI(Frame):
         if (choice == 2):
             self.convertButton = Button(win, text="Convert Women's Soccer Stats", command=self.convertWomanSoccer,
                                         background='green', fg='white', width=45, height=4)
-
         if (choice == 3):
+            self.convertButton = Button(win, text="Convert Men's Soccer Stats", command=self.convertMenSoccer,
+                                        background='green', fg='white', width=45, height=4)
+        if (choice == 4):
             self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball,
                                         background='green', fg='white', width=45, height=4)
         self.convertButton.pack()
@@ -45,8 +47,10 @@ class UI(Frame):
         self.backButton.destroy()
         self.basketballOption = Button(win, text="Baseball", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
-        self.womanSoccerOption = Button(win, text="Soccer", command=self.womanSoccerMenu, height=3)
+        self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
+        self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
+        self.menSoccerOption.pack(fill=X)
         self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
         self.volleyballOption.pack(fill=X)
         self.pack()
@@ -60,6 +64,8 @@ class UI(Frame):
         self.basketballOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
+        self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
+        self.menSoccerOption.pack(fill=X)
         self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
         self.volleyballOption.pack(fill=X)
         self.pack()
@@ -69,6 +75,7 @@ class UI(Frame):
         # menubar.add_command(label="Quit!", command=root.quit)
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
@@ -93,6 +100,7 @@ class UI(Frame):
         # menubar.add_command(label="Quit!", command=root.quit)
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
@@ -111,17 +119,43 @@ class UI(Frame):
         # Background and Pack
         self.configure(background="white")
         self.pack()
+    def menSoccerMenu(self):
+        # self.tk_menuBar.add_command(label="Open", command=self.openFile)
+        # menubar.add_command(label="Quit!", command=root.quit)
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 3
+        self.constructButtons(choice)
+
+        # Window
+        # self.output = tk.Text(self, width=100, height=15, background='black', fg='white')
+        # self.output.pack(side=tk.LEFT)
+        # scrollbar
+        # self.scrollbar = tk.Scrollbar(self,orient="vertical", command=self.output.yview)
+        # self.scrollbar.pack(side=tk.RIGHT, fill="y")
+        # self.output['yscrollcommand'] = self.scrollbar.set
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
 
     def volleyballMenu(self):
         # self.tk_menuBar.add_command(label="Open", command=self.openFile)
         # menubar.add_command(label="Quit!", command=root.quit)
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
-        choice = 3
+        choice = 4
         self.constructButtons(choice)
 
         # Window
@@ -290,8 +324,6 @@ class UI(Frame):
                                         break
 
                                 if paragraph.text == name.split(' ')[1]:
-                                    if paragraph.text == "Cheyenne":
-                                        print "LOOK HERE NOW"
                                     flag = flag + 1
                                     # self.write(name + '\n')
                                     print paragraph.text
@@ -333,6 +365,269 @@ class UI(Frame):
         document.save(newDocDirectory + "/Updated File.docx")
         sys.exit()
         # self.write("Document is fully updated\n")
+
+    def convertGoalie(self):
+        endGoalieCounter = 0
+        # Reading docx file
+        import sys
+        from docx import Document
+        document = Document(newDocDirectory+ "/Updated Filev1.docx")
+        tables = document.tables
+        section = []
+        i = 0
+        for table in tables:
+            section.append(table)
+        # document.save('MEN Game Notes Hitting_Updated.docx')
+        #
+        working = section[1]
+        # self.write("Reading document...\n")
+        content = []
+        flag = 0
+        lastNameCounter = 0
+        # Import library for reading website
+        from bs4 import BeautifulSoup
+        import urllib2
+        import pandas as pd
+        # download html from link
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page, "html.parser")
+        table = soup.find("table", {"class": "gridViewReportBuilderWide"})
+        avg_scores = []
+        names = []
+        count = 1
+        dic = {}
+        row_counter = 0
+        for row in table.find_all('tr')[1:]:
+            col = row.find_all('td')
+            row_counter = row_counter + 1
+            # if row_counter > 14:
+            #     break
+            if len(col) == 13:
+                try:
+                    name = col[1].find('a', href=True)
+                    name = name.get('title')
+                    names.append(name.split(', ')[1])
+                    print name.split(', ')[1]
+
+                    GP = col[2].find(text=True)
+                    print "GP: " + GP
+
+                    #
+                    # average = field 1
+                    GS = col[3].find(text=True)
+                    print "GS: " + GS
+
+                    Min = col[4].find(text=True)
+                    print "Min: " + Min
+
+                    GA = col[5].find(text=True)
+                    print "GA: " + GA
+
+                    GAAvg = col[6].find(text=True)
+                    print "GAAvg: " + GAAvg
+
+                    SV = col[7].find(text=True)
+                    print "SV: " + SV
+
+                    Pct = col[8].find(text=True)
+                    print "Pct: " + Pct
+
+                    # avg_scores.append(average)
+
+                    W = col[9].find(text=True)
+                    print "W: " + W
+
+                    L = col[10].find(text=True)
+                    print "L: " + L
+
+                    T = col[11].find(text=True)
+                    print "T: " + T
+
+                    SHO = col[12].find(text=True)
+                    print "SHO: " + SHO
+
+                    try:
+                        print "TESTING"
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                if flag == 1:
+                                    print "W FOUND: " + W
+                                    print "W: " + paragraph.text
+                                    paragraph.text = Q
+                                    flag = flag + 1
+                                    continue
+                                if flag == 2:
+                                    print "L FOUND: " + L
+                                    print "L: " + paragraph.text
+                                    paragraph.text = L
+                                    flag = flag + 1
+                                    continue
+                                if flag == 3:
+                                    print "T FOUND: " + T
+                                    print "T: " + paragraph.text
+                                    paragraph.text = T
+                                    flag = flag + 1
+                                    continue
+                                if flag > 3:
+                                    # print paragraph.text + '\n'
+
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP found: ' + GP
+                                        paragraph.text = "GP-" + GP
+
+                                    if paragraph.text.__contains__('GS-'):
+                                        print 'GS found: ' + GS
+                                        paragraph.text = "GS-" + GS
+
+                                    if paragraph.text.__contains__('Min-'):
+                                        print 'Min found: ' + Min
+                                        paragraph.text = "Min-" + Min
+
+                                    if paragraph.text.__contains__('GA-'):
+                                        print 'GA found: ' + GA
+                                        paragraph.text = "GA-" + GA
+
+                                    if paragraph.text.__contains__('GAAvg-'):
+                                        print 'GAAvg found: ' + GAAvg
+                                        paragraph.text = "GAAvg-" + GAAvg
+
+                                    if paragraph.text.__contains__('SV-'):
+                                        print 'SV found: ' + SV
+                                        paragraph.text = "SV-" + SV
+
+                                    if paragraph.text.__contains__('Pct-'):
+                                        print 'Pct found: ' + Pct
+                                        paragraph.text = "Pct-" + Pct
+
+                                    if paragraph.text.__contains__('SHO:'):
+                                        print 'SHO found: ' + SHO
+                                        paragraph.text = "SHO:" + SHO
+                                        endGoalieCounter = endGoalieCounter + 1
+                                        if endGoalieCounter == 2:
+                                            print "END OF GOAL"
+                                            document.save(newDocDirectory + "/Updated Filev2.docx")
+                                            sys.exit()
+                                        flag = 0
+                                        print "ROW COUNTER: " + str(row_counter)
+
+                                        break
+
+
+
+                                        # EXPERIMENT FOR DUPLICATE NAMES
+                                        # if paragraph.text == '3':
+                                        #     print '3 FOUND YAY!'
+
+                                        # if paragraph.text != (name.split(', ')[0]):
+                                        #     lastNameCounter = lastNameCounter + 1
+
+                                        # if lastNameCounter >= 14:
+                                        #     if paragraph.text != (name.split(', ')[0]):
+                                        #         print "NONE!!"
+                                        #     if paragraph.text == (name.split(', ')[0]):
+                                        #         print "QQQQ!!"
+
+                                        # if paragraph.text == (name.split(', ')[0]):
+                                        #     # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
+                                        #     # print lastNameCounter
+                                        #     # lastNameCounter = 0
+
+                                # if name.split(', ')[1] == 'K.':
+                                #     if paragraph.text == "Ka’imilani":
+                                #         flag = flag + 1
+                                #     # scan has a dictionary of all the names found on the website
+                                #     # the program will check whether or not a first name has already been recorded
+                                #     # if it has, then the counter will go up from 1 to 2
+                                #     # if the counter is more than 1, then the program will have to match the specific name
+                                #     # from the document with a matching number
+                                #     scan = dic.keys()
+                                #     for index in scan:
+                                #         if index.__contains__(name.split(', ')[1]):
+                                #             switch = True
+                                #             count = count + 1
+                                #             dic[name] = count
+                                #             count = 1
+                                #
+                                #     if switch == True:
+                                #         continue
+                                #     dic[name] = count
+                                #
+                                # if name.split(', ')[0] == '10 SCOTT':
+                                #     print "SCOTT PASSED"
+                                #     if paragraph.text == "Jaden":
+                                #         flag = flag + 1
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+
+                                if paragraph.text == "Kaylin" or paragraph.text == "Paula" or paragraph.text == "Caitlin":
+                                    print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
+                                    flag = flag + 1
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
+                                    # self.write(name + '\n')
+                                    print paragraph.text
+                                    print "TEST2"
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+                                    # paragraph.text[index + 1] = '.555'
+                                    # print paragraph.text[index + 1]
+                    except IndexError:
+                        print "list index out of range"
+                except:
+                    print "NoneType' object has no attribute 'get"
+
+        print "almost done"
+        # print dic.items()
+
+        print "Check on these players' stats."
+        for name in dic.keys():
+            if dic[name] > 1:
+                print name + '\n'
+        print " Information might be wrong due to multiple first names appearing."
+
+        # for key, value in dic.items():
+        #             print key + " => " + value
+        # print names
+        # print row_counter
+        document.add_table(1, 2, style=None)
+        document.save(newDocDirectory + "/Updated Filev2.docx")
+        sys.exit()
+        # self.write("Document is fully updated\n")
+
 
     def convertWomanSoccer(self):
         # Reading docx file
@@ -435,6 +730,8 @@ class UI(Frame):
                                     continue
                                 if flag > 3:
                                     # print paragraph.text + '\n'
+                                    # if paragraph.text.__contains__('SHO-'):
+                                    #     print 'SHO found: ' + SHO
 
                                     if paragraph.text.__contains__('GP-'):
                                         print 'GP found: ' + GP
@@ -458,14 +755,14 @@ class UI(Frame):
 
                                     if paragraph.text.__contains__('GWG-'):
                                         print 'GWG found: ' + GWG
-                                        paragraph.text = "AST-" + GWG
+                                        paragraph.text = "GWG-" + GWG
 
                                     if paragraph.text.__contains__('PKM-'):
                                         print 'PKM found: ' + PKM
                                         paragraph.text = "PKM-" + PKM
                                         flag = 0
                                         print "ROW COUNTER: " + str(row_counter)
-                                        document.save(newDocDirectory + "/Updated File.docx")
+                                        # document.save(newDocDirectory + "/Updated File.docx")
                                         break
 
 
@@ -488,30 +785,30 @@ class UI(Frame):
                                         #     # print lastNameCounter
                                         #     # lastNameCounter = 0
 
-                                if name.split(', ')[1] == 'K.':
-                                    if paragraph.text == "Ka’imilani":
-                                        flag = flag + 1
-                                    # scan has a dictionary of all the names found on the website
-                                    # the program will check whether or not a first name has already been recorded
-                                    # if it has, then the counter will go up from 1 to 2
-                                    # if the counter is more than 1, then the program will have to match the specific name
-                                    # from the document with a matching number
-                                    scan = dic.keys()
-                                    for index in scan:
-                                        if index.__contains__(name.split(', ')[1]):
-                                            switch = True
-                                            count = count + 1
-                                            dic[name] = count
-                                            count = 1
-
-                                    if switch == True:
-                                        continue
-                                    dic[name] = count
-
-                                if name.split(', ')[0] == '10 SCOTT':
-                                    print "SCOTT PASSED"
-                                    if paragraph.text == "Jaden":
-                                        flag = flag + 1
+                                # if name.split(', ')[1] == 'K.':
+                                #     if paragraph.text == "Ka’imilani":
+                                #         flag = flag + 1
+                                #     # scan has a dictionary of all the names found on the website
+                                #     # the program will check whether or not a first name has already been recorded
+                                #     # if it has, then the counter will go up from 1 to 2
+                                #     # if the counter is more than 1, then the program will have to match the specific name
+                                #     # from the document with a matching number
+                                #     scan = dic.keys()
+                                #     for index in scan:
+                                #         if index.__contains__(name.split(', ')[1]):
+                                #             switch = True
+                                #             count = count + 1
+                                #             dic[name] = count
+                                #             count = 1
+                                #
+                                #     if switch == True:
+                                #         continue
+                                #     dic[name] = count
+                                #
+                                # if name.split(', ')[0] == '10 SCOTT':
+                                #     print "SCOTT PASSED"
+                                #     if paragraph.text == "Jaden":
+                                #         flag = flag + 1
 
                                     # scan has a dictionary of all the names found on the website
                                     # the program will check whether or not a first name has already been recorded
@@ -533,6 +830,8 @@ class UI(Frame):
                                 if paragraph.text == name.split(', ')[1]:
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
                                     # self.write(name + '\n')
                                     print paragraph.text
                                     print "TEST2"
@@ -573,9 +872,259 @@ class UI(Frame):
         #             print key + " => " + value
         # print names
         # print row_counter
-        document.add_table(1, 2, style=None)
+        # document.add_table(1, 2, style=None)
+        document.save(newDocDirectory + "/Updated Filev1.docx")
+        sys.exit()
+        # self.convertGoalie()
+        # self.write("Document is fully updated\n")
+
+    def convertMenSoccer(self):
+        # Reading docx file
+        import sys
+        from docx import Document
+        document = Document(oldDocName)
+        tables = document.tables
+        section = []
+        i = 0
+        for table in tables:
+            section.append(table)
+        # document.save('MEN Game Notes Hitting_Updated.docx')
+        #
+        working = section[1]
+        # self.write("Reading document...\n")
+        content = []
+        flag = 0
+        lastNameCounter = 0
+        # Import library for reading website
+        from bs4 import BeautifulSoup
+        import urllib2
+        import pandas as pd
+        # download html from link
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&sea=NAIMSO_2017&team=2623"
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page, "html.parser")
+        table = soup.find("table", {"class": "gridViewReportBuilderWide"})
+        avg_scores = []
+        names = []
+        count = 1
+        dic = {}
+        row_counter = 0
+        for row in table.find_all('tr')[1:]:
+            col = row.find_all('td')
+            row_counter = row_counter + 1
+            # if row_counter > 14:
+            #     break
+            if len(col) == 16:
+                try:
+                    name = col[1].find('a', href=True)
+                    name = name.get('title')
+                    names.append(name.split(', ')[1])
+                    print name.split(', ')[1]
+
+                    GP = col[2].find(text=True)
+                    print "GP: " + GP
+
+                    #
+                    # average = field 1
+                    GS = col[3].find(text=True)
+                    print "GS: " + GS
+
+                    G = col[4].find(text=True)
+                    print "G: " + G
+
+                    A = col[5].find(text=True)
+                    print "A: " + A
+
+                    Pts = col[6].find(text=True)
+                    print "Pts: " + Pts
+
+                    SH = col[8].find(text=True)
+                    print "SH: " + SH
+
+                    SOG = col[9].find(text=True)
+                    print "SOG: " + SOG
+
+                    # avg_scores.append(average)
+
+                    YC = col[11].find(text=True)
+                    print "YC: " + YC
+
+                    GWG = col[13].find(text=True)
+                    print "GWG: " + GWG
+
+                    PKM = col[14].find(text=True)
+                    print "PKM: " + PKM
+
+                    try:
+                        print "TESTING"
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                if flag == 1:
+                                    print "G FOUND: " + G
+                                    paragraph.text = G
+                                    flag = flag + 1
+                                    continue
+                                if flag == 2:
+                                    print "A FOUND: " + A
+                                    paragraph.text = A
+                                    flag = flag + 1
+                                    continue
+                                if flag == 3:
+                                    print "Pts FOUND: " + Pts
+                                    paragraph.text = Pts
+                                    flag = flag + 1
+                                    continue
+                                if flag > 3:
+                                    # print paragraph.text + '\n'
+                                    # if paragraph.text.__contains__('SHO-'):
+                                    #     print 'SHO found: ' + SHO
+
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP found: ' + GP
+                                        paragraph.text = "GP-" + GP
+
+                                    if paragraph.text.__contains__('GS-'):
+                                        print 'GS found: ' + GS
+                                        paragraph.text = "GS-" + GS
+
+                                    if paragraph.text.__contains__('SH-'):
+                                        print 'SH found: ' + SH
+                                        paragraph.text = "SH-" + SH
+
+                                    if paragraph.text.__contains__('SOG-'):
+                                        print 'SOG found: ' + SOG
+                                        paragraph.text = "SOG-" + SOG
+
+                                    if paragraph.text.__contains__('YC-'):
+                                        print 'YC found: ' + YC
+                                        paragraph.text = "YC-" + YC
+
+                                    if paragraph.text.__contains__('GWG-'):
+                                        print 'GWG found: ' + GWG
+                                        paragraph.text = "GWG-" + GWG
+
+                                    if paragraph.text.__contains__('PKM-'):
+                                        print 'PKM found: ' + PKM
+                                        paragraph.text = "PKM-" + PKM
+                                        flag = 0
+                                        print "ROW COUNTER: " + str(row_counter)
+                                        # document.save(newDocDirectory + "/Updated File.docx")
+                                        break
+
+
+
+                                        # EXPERIMENT FOR DUPLICATE NAMES
+                                        # if paragraph.text == '3':
+                                        #     print '3 FOUND YAY!'
+
+                                        # if paragraph.text != (name.split(', ')[0]):
+                                        #     lastNameCounter = lastNameCounter + 1
+
+                                        # if lastNameCounter >= 14:
+                                        #     if paragraph.text != (name.split(', ')[0]):
+                                        #         print "NONE!!"
+                                        #     if paragraph.text == (name.split(', ')[0]):
+                                        #         print "QQQQ!!"
+
+                                        # if paragraph.text == (name.split(', ')[0]):
+                                        #     # print 'LAST NAME- ' + name.split(', ')[0] + ' FOUND!!!'
+                                        #     # print lastNameCounter
+                                        #     # lastNameCounter = 0
+
+                                # if name.split(', ')[1] == 'K.':
+                                #     if paragraph.text == "Ka’imilani":
+                                #         flag = flag + 1
+                                #     # scan has a dictionary of all the names found on the website
+                                #     # the program will check whether or not a first name has already been recorded
+                                #     # if it has, then the counter will go up from 1 to 2
+                                #     # if the counter is more than 1, then the program will have to match the specific name
+                                #     # from the document with a matching number
+                                #     scan = dic.keys()
+                                #     for index in scan:
+                                #         if index.__contains__(name.split(', ')[1]):
+                                #             switch = True
+                                #             count = count + 1
+                                #             dic[name] = count
+                                #             count = 1
+                                #
+                                #     if switch == True:
+                                #         continue
+                                #     dic[name] = count
+                                #
+                                # if name.split(', ')[0] == '10 SCOTT':
+                                #     print "SCOTT PASSED"
+                                #     if paragraph.text == "Jaden":
+                                #         flag = flag + 1
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+
+                                if paragraph.text == name.split(', ')[1]:
+                                    print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                    flag = flag + 1
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
+                                    # self.write(name + '\n')
+                                    print paragraph.text
+                                    print "TEST2"
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+                                    # paragraph.text[index + 1] = '.555'
+                                    # print paragraph.text[index + 1]
+                    except IndexError:
+                        print "list index out of range"
+                except:
+                    print "NoneType' object has no attribute 'get"
+
+        print "almost done"
+        # print dic.items()
+
+        print "Check on these players' stats."
+        for name in dic.keys():
+            if dic[name] > 1:
+                print name + '\n'
+        print " Information might be wrong due to multiple first names appearing."
+
+        # for key, value in dic.items():
+        #             print key + " => " + value
+        # print names
+        # print row_counter
+        # document.add_table(1, 2, style=None)
         document.save(newDocDirectory + "/Updated File.docx")
         sys.exit()
+        # self.convertGoalie()
         # self.write("Document is fully updated\n")
 
 
