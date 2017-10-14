@@ -383,7 +383,7 @@ class UI(Frame):
         # document.save('MEN Game Notes Hitting_Updated.docx')
         #
         working = section[1]
-        workingSecondPage = section[3]
+
         # self.write("Reading document...\n")
         content = []
         flag = 0
@@ -527,7 +527,7 @@ class UI(Frame):
 
                                         break
 
-                                if paragraph.text == name.split(', ')[1]:
+                                if paragraph.text.__contains__(name.split(', ')[1]):
                                     print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     # self.write(name + '\n')
@@ -553,6 +553,7 @@ class UI(Frame):
                                     # paragraph.text[index + 1] = '.555'
                                     # print paragraph.text[index + 1]
                         try:
+                            workingSecondPage = section[3]
                             for row in workingSecondPage.rows:
                                 for cell in row.cells:
                                     for index, paragraph in enumerate(cell.paragraphs):
@@ -622,7 +623,7 @@ class UI(Frame):
 
                                             break
 
-                                    if paragraph.text == name.split(', ')[1]:
+                                    if paragraph.text.__contains__(name.split(', ')[1]):
                                         print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
                                         flag = flag + 1
                                         # self.write(name + '\n')
@@ -1098,7 +1099,7 @@ class UI(Frame):
                                         continue
                                     dic[name] = count
 
-                                if paragraph.text == name.split(', ')[1]:
+                                if paragraph.text.__contains__(name.split(', ')[1]):
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
@@ -1356,7 +1357,7 @@ class UI(Frame):
                                         continue
                                     dic[name] = count
 
-                                if paragraph.text == name.split(', ')[1]:
+                                if paragraph.text.__contains__(name.split(', ')[1]):
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
@@ -1502,7 +1503,7 @@ class UI(Frame):
                                         continue
                                     dic[name] = count
 
-                                if paragraph.text == name.split(', ')[1]:
+                                if paragraph.text.__contains__(name.split(', ')[1]):
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
