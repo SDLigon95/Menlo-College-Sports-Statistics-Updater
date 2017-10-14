@@ -366,9 +366,11 @@ class UI(Frame):
         sys.exit()
         # self.write("Document is fully updated\n")
 
-    def convertGoalie(self, newDocName ):
+    def convertGoalie(self, newDocName, gender):
         print "GOALIE BEGIN"
+        print gender
         endGoalieCounter = 0
+        url = ""
         # Reading docx file
         import sys
         from docx import Document
@@ -381,6 +383,7 @@ class UI(Frame):
         # document.save('MEN Game Notes Hitting_Updated.docx')
         #
         working = section[1]
+        workingSecondPage = section[3]
         # self.write("Reading document...\n")
         content = []
         flag = 0
@@ -390,7 +393,10 @@ class UI(Frame):
         import urllib2
         import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
+        if gender == "woman":
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
+        if gender == "man":
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&sea=NAIMSO_2017&team=2623"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
@@ -456,6 +462,9 @@ class UI(Frame):
                                 for index, paragraph in enumerate(cell.paragraphs):
                                     content.append(paragraph.text)
                                     switch = False
+                                print str(flag)
+                                print paragraph.text
+                                print name.split(', ')[1]
                                 if flag == 1:
                                     print "W FOUND: " + W
                                     print "W: " + paragraph.text
@@ -543,6 +552,103 @@ class UI(Frame):
                                     dic[name] = count
                                     # paragraph.text[index + 1] = '.555'
                                     # print paragraph.text[index + 1]
+                        try:
+                            for row in workingSecondPage.rows:
+                                for cell in row.cells:
+                                    for index, paragraph in enumerate(cell.paragraphs):
+                                        content.append(paragraph.text)
+                                        switch = False
+                                    print paragraph.text
+                                    print name.split(', ')[1]
+                                    if flag == 1:
+                                        print "W FOUND: " + W
+                                        print "W: " + paragraph.text
+                                        paragraph.text = W
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 2:
+                                        print "L FOUND: " + L
+                                        print "L: " + paragraph.text
+                                        paragraph.text = L
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 3:
+                                        print "T FOUND: " + T
+                                        print "T: " + paragraph.text
+                                        paragraph.text = T
+                                        flag = flag + 1
+                                        continue
+                                    if flag > 3:
+                                        # print paragraph.text + '\n'
+
+                                        if paragraph.text.__contains__('GP-'):
+                                            print 'GP found: ' + GP
+                                            paragraph.text = "GP-" + GP
+
+                                        if paragraph.text.__contains__('GS-'):
+                                            print 'GS found: ' + GS
+                                            paragraph.text = "GS-" + GS
+
+                                        if paragraph.text.__contains__('Min-'):
+                                            print 'Min found: ' + Min
+                                            paragraph.text = "Min-" + Min
+
+                                        if paragraph.text.__contains__('GA-'):
+                                            print 'GA found: ' + GA
+                                            paragraph.text = "GA-" + GA
+
+                                        if paragraph.text.__contains__('GAAvg-'):
+                                            print 'GAAvg found: ' + GAAvg
+                                            paragraph.text = "GAAvg-" + GAAvg
+
+                                        if paragraph.text.__contains__('SV-'):
+                                            print 'SV found: ' + SV
+                                            paragraph.text = "SV-" + SV
+
+                                        if paragraph.text.__contains__('Pct-'):
+                                            print 'Pct found: ' + Pct
+                                            paragraph.text = "Pct-" + Pct
+
+                                        if paragraph.text.__contains__('SHO-'):
+                                            print 'SHO found: ' + SHO
+                                            paragraph.text = "SHO-" + SHO
+                                            endGoalieCounter = endGoalieCounter + 1
+                                            if endGoalieCounter == 2:
+                                                print "END OF GOAL"
+                                                document.save(newDocDirectory + "/Updated Filev2.docx")
+                                                sys.exit()
+                                            flag = 0
+                                            print "ROW COUNTER: " + str(row_counter)
+
+                                            break
+
+                                    if paragraph.text == name.split(', ')[1]:
+                                        print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
+                                        flag = flag + 1
+                                        # self.write(name + '\n')
+                                        print paragraph.text
+                                        print "TEST2"
+
+                                        # scan has a dictionary of all the names found on the website
+                                        # the program will check whether or not a first name has already been recorded
+                                        # if it has, then the counter will go up from 1 to 2
+                                        # if the counter is more than 1, then the program will have to match the specific name
+                                        # from the document with a matching number
+                                        scan = dic.keys()
+                                        for index in scan:
+                                            if index.__contains__(name.split(', ')[1]):
+                                                switch = True
+                                                count = count + 1
+                                                dic[name] = count
+                                                count = 1
+
+                                        if switch == True:
+                                            continue
+                                        dic[name] = count
+                                        # paragraph.text[index + 1] = '.555'
+                                        # print paragraph.text[index + 1]
+                        except:
+                            print "non men"
                     except IndexError:
                         print "list index out of range"
                 except:
@@ -794,6 +900,7 @@ class UI(Frame):
 
     def convertWomanSoccer(self):
         # Reading docx file
+        gender = "woman"
         import sys
         from docx import Document
         document = Document(oldDocName)
@@ -1039,7 +1146,7 @@ class UI(Frame):
         # document.add_table(1, 2, style=None)
         newDocName = newDocDirectory + "/Updated Filev1.docx"
         document.save(newDocName)
-        self.convertGoalie(newDocName)
+        self.convertGoalie(newDocName, gender)
         sys.exit()
         # self.convertGoalie()
         # self.write("Document is fully updated\n")
@@ -1051,6 +1158,7 @@ class UI(Frame):
 
     def convertMenSoccer(self):
         # Reading docx file
+        gender = "man"
         import sys
         from docx import Document
         document = Document(oldDocName)
@@ -1441,7 +1549,10 @@ class UI(Frame):
         # print names
         # print row_counter
         # document.add_table(1, 2, style=None)
-        document.save(newDocDirectory + "/Updated File.docx")
+        newDocName = newDocDirectory + "/Updated Filev1.docx"
+        document.save(newDocName)
+        self.convertGoalie(newDocName, gender)
+
         sys.exit()
         # self.convertGoalie()
         # self.write("Document is fully updated\n")
