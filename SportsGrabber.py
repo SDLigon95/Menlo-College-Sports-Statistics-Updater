@@ -294,7 +294,7 @@ class UI(Frame):
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
         document.add_table(1, 2, style=None)
-        document.save(newDocDirectory + "/Updated File.docx")
+        document.save(newDocDirectory + "/Baseball Updated File.docx")
         sys.exit()
 
     def convertGoalie(self, newDocName, gender):
@@ -578,7 +578,10 @@ class UI(Frame):
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
         document.add_table(1, 2, style=None)
-        document.save(newDocDirectory + "/Updated Filev2.docx")
+        if gender == "woman":
+            document.save(newDocDirectory + "/Women's Soccer Updated File.docx")
+        if gender == "man":
+            document.save(newDocDirectory + "/Men's Soccer Updated File.docx")
         sys.exit()
 
     def convertWomanSoccer(self):
@@ -755,7 +758,7 @@ class UI(Frame):
             if dic[name] > 1:
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
-        newDocName = newDocDirectory + "/Updated Filev1.docx"
+        newDocName = newDocDirectory + "/Women's Soccer Updated File.docx"
         document.save(newDocName)
         self.convertGoalie(newDocName, gender)
         sys.exit()
@@ -1026,7 +1029,7 @@ class UI(Frame):
             if dic[name] > 1:
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
-        newDocName = newDocDirectory + "/Updated Filev1.docx"
+        newDocName = newDocDirectory + "/Men's Soccer Updated File.docx"
         document.save(newDocName)
         self.convertGoalie(newDocName, gender)
         sys.exit()
@@ -1233,7 +1236,7 @@ class UI(Frame):
                 print name + '\n'
         print " Information might be wrong due to multiple first names appearing."
         document.add_table(1, 2, style=None)
-        document.save(newDocDirectory + "/Updated File.docx")
+        document.save(newDocDirectory + "/Volleyball Updated File.docx")
         sys.exit()
 
 if __name__ == '__main__':
