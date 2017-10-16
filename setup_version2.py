@@ -1,8 +1,12 @@
 from distutils.core import setup
 import py2exe
 
-setup(
+setup_dict = dict(
         console=['SportsGrabber.py'],
+        windows=[{
+                "script": "SportsGrabber.py",
+                "icon_resources": [(1, "SportsGrabber.ico")],
+            }],
         options={
         'py2exe': 
         {
@@ -11,3 +15,5 @@ setup(
         }
 
 )
+setup(**setup_dict)
+setup(**setup_dict)
