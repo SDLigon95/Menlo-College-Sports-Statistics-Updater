@@ -1018,11 +1018,16 @@ class UI(Frame):
                     print "NoneType' object has no attribute 'get"
 
         print "almost done"
-        print "Check on these players' stats."
+        something = "Check on these players' stats. \n"
+
         for name in dic.keys():
             if dic[name] > 1:
-                print name + '\n'
-        print " Information might be wrong due to multiple first names appearing."
+                name = name + '\n'
+                something = something + name
+        something = something + "\nInformation might be wrong due to multiple first names appearing."
+        import tkMessageBox
+
+        tkMessageBox.showwarning("Warning", something)
         newDocName = newDocDirectory + "/Women's Basketball Updated File.docx"
         document.save(newDocName)
         sys.exit()
