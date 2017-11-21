@@ -37,6 +37,12 @@ class UI(Frame):
         if (choice == 4):
             self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball,
                                         background='green', fg='white', width=45, height=4)
+        if (choice == 5):
+            self.convertButton = Button(win, text="Convert Women's Basketball Stats", command=self.convertWomanBasketball,
+                                        background='green', fg='white', width=45, height=4)
+        if (choice == 6):
+            self.convertButton = Button(win, text="Convert Men's Basketball Stats", command=self.convertManBasketball,
+                                        background='green', fg='white', width=45, height=4)
         self.convertButton.pack()
 
     def destroyButtons(self):
@@ -52,6 +58,10 @@ class UI(Frame):
         self.menSoccerOption.pack(fill=X)
         self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
         self.volleyballOption.pack(fill=X)
+        self.womanBasketballOption = Button(win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
+        self.womanBasketballOption.pack(fill=X)
+        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
+        self.manBasketballOption.pack(fill=X)
         self.pack()
 
     # Create UI
@@ -66,6 +76,10 @@ class UI(Frame):
         self.menSoccerOption.pack(fill=X)
         self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
         self.volleyballOption.pack(fill=X)
+        self.womanBasketballOption = Button (win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
+        self.womanBasketballOption.pack(fill=X)
+        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
+        self.manBasketballOption.pack(fill=X)
         self.pack()
 
     def baseballMenu(self):
@@ -73,6 +87,8 @@ class UI(Frame):
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
@@ -88,6 +104,8 @@ class UI(Frame):
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
@@ -97,11 +115,48 @@ class UI(Frame):
         # Background and Pack
         self.configure(background="white")
         self.pack()
+
+    def womanBasketballMenu(self):
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 5
+        self.constructButtons(choice)
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
+    def manBasketballMenu(self):
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 6
+        self.constructButtons(choice)
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
     def menSoccerMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
@@ -118,6 +173,8 @@ class UI(Frame):
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
@@ -761,6 +818,420 @@ class UI(Frame):
         newDocName = newDocDirectory + "/Women's Soccer Updated File.docx"
         document.save(newDocName)
         self.convertGoalie(newDocName, gender)
+        sys.exit()
+
+    def convertWomanBasketball(self):
+        import sys
+        from docx import Document
+        document = Document(oldDocName)
+        tables = document.tables
+        section = []
+        i = 0
+        for table in tables:
+            section.append(table)
+        working = section[1]
+        content = []
+        flag = 0
+        # Import library for reading website
+        from bs4 import BeautifulSoup
+        import urllib2
+        import pandas as pd
+        # download html from link
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBB&sea=NAIWBB_2017&team=233"
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page, "html.parser")
+        table = soup.find("table", {"class": "gridViewReportBuilderWide"})
+        names = []
+        count = 1
+        dic = {}
+        row_counter = 0
+        for row in table.find_all('tr')[1:]:
+            col = row.find_all('td')
+            row_counter = row_counter + 1
+            if len(col) == 25:
+                print "LENGTH = 25"
+                try:
+                    # name*
+                    # PCT1*
+                    # PCT2*
+                    # PCT3*
+                    #
+                    # GP*
+                    # GS*
+                    # AVG*
+                    # R / G*
+                    # A*
+                    # BLK*
+                    # ST*
+                    # P / G
+                    name = col[0].find('a', href=True)
+                    name = name.get('title')
+                    names.append(name.split(', ')[1])
+                    print name.split(', ')[1]
+
+                    GP = col[1].find(text=True)
+                    print "GP: " + GP
+
+                    GS = col[2].find(text=True)
+                    print "GS: " + GS
+
+                    Avg = col[4].find(text=True)
+                    print "Avg: " + Avg
+
+                    PCT1 = col[7].find(text=True)
+                    print "PCT1: " + PCT1
+
+                    PCT2 = col[10].find(text=True)
+                    print "PCT2: " + PCT2
+
+                    PCT3 = col[13].find(text=True)
+                    print "PCT3: " + PCT3
+
+                    RG = col[17].find(text=True)
+                    print "RG: " + RG
+
+                    A = col[19].find(text=True)
+                    print "A: " + A
+
+                    BLK = col[21].find(text=True)
+                    print "BLK: " + BLK
+
+                    ST = col[22].find(text=True)
+                    print "ST: " + ST
+
+                    PG = col[24].find(text=True)
+                    print "PG: " + PG
+
+                    try:
+                        print "Begin Convert"
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                if flag == 1:
+                                    print "PCT1 FOUND: " + PCT1
+                                    paragraph.text = PCT1
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag == 2:
+                                    print "PCT2 FOUND: " + PCT2
+                                    paragraph.text = PCT2
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag == 3:
+                                    print "PCT3 FOUND: " + PCT3
+                                    paragraph.text = PCT3
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag > 3:
+                                    # print paragraph.text
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP found: ' + GP
+                                        paragraph.text = "GP-" + GP
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('GS-'):
+                                        print 'GS found: ' + GS
+                                        paragraph.text = "GS-" + GS
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('AVG-'):
+                                        print 'AVG found: ' + Avg
+                                        paragraph.text = "AVG-" + Avg
+
+                                    if paragraph.text.__contains__('R/G-'):
+                                        print 'RG found: ' + RG
+                                        paragraph.text = "RG-" + RG
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('A-'):
+                                        print 'A found: ' + A
+                                        paragraph.text = "A-" + A
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('BLK-'):
+                                        print 'BLK found: ' + BLK
+                                        paragraph.text = "BLK-" + BLK
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('ST-'):
+                                        print 'ST found: ' + ST
+                                        paragraph.text = "ST-" + ST
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('P/G-'):
+                                        print 'PG found: ' + PG
+                                        paragraph.text = "PG-" + PG
+                                        flag = 0
+                                        print "ROW COUNTER: " + str(row_counter)
+                                        break
+
+                                        # # scan has a dictionary of all the names found on the website
+                                        # # the program will check whether or not a first name has already been recorded
+                                        # # if it has, then the counter will go up from 1 to 2
+                                        # # if the counter is more than 1, then the program will have to match the specific name
+                                        # # from the document with a matching number
+                                        # scan = dic.keys()
+                                        # for index in scan:
+                                        #     if index.__contains__(name.split(', ')[1]):
+                                        #         switch = True
+                                        #         count = count + 1
+                                        #         dic[name] = count
+                                        #         count = 1
+                                        #
+                                        # if switch == True:
+                                        #     continue
+                                        # dic[name] = count
+
+                                if paragraph.text.__contains__(name.split(', ')[1]):
+                                    print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                    flag = flag + 1
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
+                                    # self.write(name + '\n')
+                                    print paragraph.text
+                                    print "TEST2"
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+                    except IndexError:
+                        print "list index out of range"
+                except:
+                    print "NoneType' object has no attribute 'get"
+
+        print "almost done"
+        print "Check on these players' stats."
+        for name in dic.keys():
+            if dic[name] > 1:
+                print name + '\n'
+        print " Information might be wrong due to multiple first names appearing."
+        newDocName = newDocDirectory + "/Women's Basketball Updated File.docx"
+        document.save(newDocName)
+        sys.exit()
+
+    def convertManBasketball(self):
+        import sys
+        from docx import Document
+        document = Document(oldDocName)
+        tables = document.tables
+        section = []
+        i = 0
+        for table in tables:
+            section.append(table)
+        working = section[1]
+        content = []
+        flag = 0
+        # Import library for reading website
+        from bs4 import BeautifulSoup
+        import urllib2
+        import pandas as pd
+        # download html from link
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBB&sea=NAIMBB_2017&team=556"
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page, "html.parser")
+        table = soup.find("table", {"class": "gridViewReportBuilderWide"})
+        names = []
+        count = 1
+        dic = {}
+        row_counter = 0
+        for row in table.find_all('tr')[1:]:
+            col = row.find_all('td')
+            row_counter = row_counter + 1
+            if len(col) == 25:
+                print "LENGTH = 25"
+                try:
+                    # name*
+                    # PCT1*
+                    # PCT2*
+                    # PCT3*
+                    #
+                    # GP*
+                    # GS*
+                    # AVG*
+                    # R / G*
+                    # A*
+                    # BLK*
+                    # ST*
+                    # P / G
+                    name = col[0].find('a', href=True)
+                    name = name.get('title')
+                    names.append(name.split(', ')[1])
+                    print name.split(', ')[1]
+
+                    GP = col[1].find(text=True)
+                    print "GP: " + GP
+
+                    GS = col[2].find(text=True)
+                    print "GS: " + GS
+
+                    Avg = col[4].find(text=True)
+                    print "Avg: " + Avg
+
+                    PCT1 = col[7].find(text=True)
+                    print "PCT1: " + PCT1
+
+                    PCT2 = col[10].find(text=True)
+                    print "PCT2: " + PCT2
+
+                    PCT3 = col[13].find(text=True)
+                    print "PCT3: " + PCT3
+
+                    RG = col[17].find(text=True)
+                    print "RG: " + RG
+
+                    A = col[19].find(text=True)
+                    print "A: " + A
+
+                    BLK = col[21].find(text=True)
+                    print "BLK: " + BLK
+
+                    ST = col[22].find(text=True)
+                    print "ST: " + ST
+
+                    PG = col[24].find(text=True)
+                    print "PG: " + PG
+
+                    try:
+                        print "Begin Convert"
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                if flag == 1:
+                                    print "PCT1 FOUND: " + PCT1
+                                    paragraph.text = PCT1
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag == 2:
+                                    print "PCT2 FOUND: " + PCT2
+                                    paragraph.text = PCT2
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag == 3:
+                                    print "PCT3 FOUND: " + PCT3
+                                    paragraph.text = PCT3
+                                    flag = flag + 1
+                                    print paragraph.text
+                                    continue
+                                if flag > 3:
+                                    # print paragraph.text
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP found: ' + GP
+                                        paragraph.text = "GP-" + GP
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('GS-'):
+                                        print 'GS found: ' + GS
+                                        paragraph.text = "GS-" + GS
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('AVG-'):
+                                        print 'AVG found: ' + Avg
+                                        paragraph.text = "AVG-" + Avg
+
+                                    if paragraph.text.__contains__('R/G-'):
+                                        print 'RG found: ' + RG
+                                        paragraph.text = "RG-" + RG
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('A-'):
+                                        print 'A found: ' + A
+                                        paragraph.text = "A-" + A
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('BLK-'):
+                                        print 'BLK found: ' + BLK
+                                        paragraph.text = "BLK-" + BLK
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('ST-'):
+                                        print 'ST found: ' + ST
+                                        paragraph.text = "ST-" + ST
+                                        print paragraph.text
+
+                                    if paragraph.text.__contains__('P/G-'):
+                                        print 'PG found: ' + PG
+                                        paragraph.text = "PG-" + PG
+                                        flag = 0
+                                        print "ROW COUNTER: " + str(row_counter)
+                                        break
+
+                                        # # scan has a dictionary of all the names found on the website
+                                        # # the program will check whether or not a first name has already been recorded
+                                        # # if it has, then the counter will go up from 1 to 2
+                                        # # if the counter is more than 1, then the program will have to match the specific name
+                                        # # from the document with a matching number
+                                        # scan = dic.keys()
+                                        # for index in scan:
+                                        #     if index.__contains__(name.split(', ')[1]):
+                                        #         switch = True
+                                        #         count = count + 1
+                                        #         dic[name] = count
+                                        #         count = 1
+                                        #
+                                        # if switch == True:
+                                        #     continue
+                                        # dic[name] = count
+
+                                if paragraph.text.__contains__(name.split(', ')[1]):
+                                    print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                    flag = flag + 1
+                                    if paragraph.text == "Cheyenne":
+                                        print "LOOK HERE NOW"
+                                    # self.write(name + '\n')
+                                    print paragraph.text
+                                    print "TEST2"
+
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(', ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+                    except IndexError:
+                        print "list index out of range"
+                except:
+                    print "NoneType' object has no attribute 'get"
+
+        print "almost done"
+        print "Check on these players' stats."
+        for name in dic.keys():
+            if dic[name] > 1:
+                print name + '\n'
+        print " Information might be wrong due to multiple first names appearing."
+        newDocName = newDocDirectory + "/Men's Basketball Updated File.docx"
+        document.save(newDocName)
         sys.exit()
 
     def convertMenSoccer(self):
