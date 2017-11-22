@@ -965,7 +965,7 @@ class UI(Frame):
 
                                     if paragraph.text.__contains__('P/G-'):
                                         print 'PG found: ' + PG
-                                        paragraph.text = "PG-" + PG
+                                        paragraph.text = "P/G-" + PG
                                         flag = 0
                                         print "ROW COUNTER: " + str(row_counter)
                                         break
@@ -1177,7 +1177,7 @@ class UI(Frame):
 
                                     if paragraph.text.__contains__('P/G-'):
                                         print 'PG found: ' + PG
-                                        paragraph.text = "PG-" + PG
+                                        paragraph.text = "P/G-" + PG
                                         flag = 0
                                         print "ROW COUNTER: " + str(row_counter)
                                         break
