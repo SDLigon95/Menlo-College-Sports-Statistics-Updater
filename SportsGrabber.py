@@ -227,7 +227,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+       # import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2017&team=9101"
         page = urllib2.urlopen(url)
@@ -375,7 +375,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         if gender == "woman":
             url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
@@ -657,7 +657,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
         page = urllib2.urlopen(url)
@@ -835,7 +835,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBB&sea=NAIWBB_2017&team=233"
         page = urllib2.urlopen(url)
@@ -1047,7 +1047,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBB&sea=NAIMBB_2017&team=556"
         page = urllib2.urlopen(url)
@@ -1255,7 +1255,7 @@ class UI(Frame):
         flag = 0
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&sea=NAIMSO_2017&team=2623"
         page = urllib2.urlopen(url)
@@ -1526,7 +1526,7 @@ class UI(Frame):
         # Import library for reading website
         from bs4 import BeautifulSoup
         import urllib2
-        import pandas as pd
+        #import pandas as pd
         # download html from link
         url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&sea=NAIWVB_2017&team=2030"
         page = urllib2.urlopen(url)
