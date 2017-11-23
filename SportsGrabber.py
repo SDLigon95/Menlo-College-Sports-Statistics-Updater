@@ -1198,13 +1198,13 @@ class UI(Frame):
                                         # if switch == True:
                                         #     continue
                                         # dic[name] = count
-                                # "Website ->" "N'Jai" "Word Doc ->" "N’Jai"
+                                # "Website ->" "N'Jai" "Word Doc ->" "N’Jai" 
                                 if paragraph.text == "N’Jai" and name.split(', ')[1] == "N'Jai":
                                     print "Special Instance"
-                                    print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                    #print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
-                                    print paragraph.text
-                                    print "TEST2"
+                                    #print paragraph.text
+                                    #print "TEST2"
 
                                     # scan has a dictionary of all the names found on the website
                                     # the program will check whether or not a first name has already been recorded
