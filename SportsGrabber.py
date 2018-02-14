@@ -28,20 +28,28 @@ class UI(Frame):
         if (choice == 1):
             self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseball,
                                         background='green', fg='white', width=45, height=4)
+
         if (choice == 2):
+            self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseballPitching,
+                                        background='green', fg='white', width=45, height=4)
+
+        if (choice == 3):
             self.convertButton = Button(win, text="Convert Women's Soccer Stats", command=self.convertWomanSoccer,
                                         background='green', fg='white', width=45, height=4)
-        if (choice == 3):
+        if (choice == 4):
             self.convertButton = Button(win, text="Convert Men's Soccer Stats", command=self.convertMenSoccer,
                                         background='green', fg='white', width=45, height=4)
-        if (choice == 4):
+        if (choice == 5):
             self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball,
                                         background='green', fg='white', width=45, height=4)
-        if (choice == 5):
+        if (choice == 6):
             self.convertButton = Button(win, text="Convert Women's Basketball Stats", command=self.convertWomanBasketball,
                                         background='green', fg='white', width=45, height=4)
-        if (choice == 6):
+        if (choice == 7):
             self.convertButton = Button(win, text="Convert Men's Basketball Stats", command=self.convertManBasketball,
+                                        background='green', fg='white', width=45, height=4)
+        if (choice == 8):
+            self.convertButton = Button(win, text="Convert Softball Stats", command=self.convertSoftball,
                                         background='green', fg='white', width=45, height=4)
         self.convertButton.pack()
 
@@ -52,6 +60,8 @@ class UI(Frame):
         self.backButton.destroy()
         self.basketballOption = Button(win, text="Baseball", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
+        self.basketballOptionPitchers = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
+        self.basketballOptionPitchers.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
@@ -62,14 +72,18 @@ class UI(Frame):
         self.womanBasketballOption.pack(fill=X)
         self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
         self.manBasketballOption.pack(fill=X)
+        self.softballOption = Button(win, text="Softball", command = self.softballMenu, height=3)
+        self.softballOption.pack(fill=X)
         self.pack()
 
     # Create UI
     def __init__(self):
         # Open and Convert button
         Frame.__init__(self)
-        self.basketballOption = Button(win, text="Baseball", command=self.baseballMenu, height=3)
+        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
+        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenu, height=3)
+        self.basketballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
@@ -78,13 +92,17 @@ class UI(Frame):
         self.volleyballOption.pack(fill=X)
         self.womanBasketballOption = Button (win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
         self.womanBasketballOption.pack(fill=X)
-        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
+        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.baseballMenuPitching, height=3)
         self.manBasketballOption.pack(fill=X)
+        self.softballOption = Button(win, text="Softball", command = self.softballMenu, height=3)
+        self.softballOption.pack(fill=X)
         self.pack()
 
     def baseballMenu(self):
+        self.basketballPitchersOption.destroy()
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -98,10 +116,11 @@ class UI(Frame):
         # Background and Pack
         self.configure(background="white")
         self.pack()
-
-    def womanSoccerMenu(self):
-        self.volleyballOption.destroy()
+    def baseballMenuPitching(self):
+        self.basketballPitchersOption.destroy()
         self.basketballOption.destroy()
+        self.volleyballOption.destroy()
+        self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -116,9 +135,11 @@ class UI(Frame):
         self.configure(background="white")
         self.pack()
 
-    def womanBasketballMenu(self):
+    def softballMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.softballOption.destroy()
+        # self.baseballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -126,32 +147,17 @@ class UI(Frame):
         self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
-        choice = 5
+        choice = 8
         self.constructButtons(choice)
 
         # Background and Pack
         self.configure(background="white")
         self.pack()
 
-    def manBasketballMenu(self):
+    def womanSoccerMenu(self):
         self.volleyballOption.destroy()
-        self.basketballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
-        self.backButton.pack(side=LEFT)
-        choice = 6
-        self.constructButtons(choice)
-
-        # Background and Pack
-        self.configure(background="white")
-        self.pack()
-
-    def menSoccerMenu(self):
-        self.volleyballOption.destroy()
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
@@ -167,10 +173,49 @@ class UI(Frame):
         self.configure(background="white")
         self.pack()
 
-
-    def volleyballMenu(self):
+    def womanBasketballMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 6
+        self.constructButtons(choice)
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
+    def manBasketballMenu(self):
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 7
+        self.constructButtons(choice)
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
+    def menSoccerMenu(self):
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -179,6 +224,26 @@ class UI(Frame):
                                  width=4, height=4)
         self.backButton.pack(side=LEFT)
         choice = 4
+        self.constructButtons(choice)
+
+        # Background and Pack
+        self.configure(background="white")
+        self.pack()
+
+
+    def volleyballMenu(self):
+        self.volleyballOption.destroy()
+        self.basketballOption.destroy()
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
+        self.menSoccerOption.destroy()
+        self.womanSoccerOption.destroy()
+        self.womanBasketballOption.destroy()
+        self.manBasketballOption.destroy()
+        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
+                                 width=4, height=4)
+        self.backButton.pack(side=LEFT)
+        choice = 5
         self.constructButtons(choice)
 
         # Background and Pack
@@ -207,6 +272,332 @@ class UI(Frame):
 
     # Grabs input from website and compares names found in original document.
     # Scores will get updated based on which names are found.
+
+    def convertSoftball(self):
+            # Reading docx file
+            import sys
+            from docx import Document
+            document = Document(oldDocName)
+            tables = document.tables
+            section = []
+            i = 0
+            for table in tables:
+                section.append(table)
+            # document.save('MEN Game Notes Hitting_Updated.docx')
+            #
+            working = section[1]
+            # self.write("Reading document...\n")
+            content = []
+            flag = 0
+            lastNameCounter = 0
+            # Import library for reading website
+            from bs4 import BeautifulSoup
+            import urllib2
+        # import pandas as pd
+            # download html from link
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&sea=NAIWBA_2018&team=1501"
+            page = urllib2.urlopen(url)
+            soup = BeautifulSoup(page, "html.parser")
+            table = soup.find("table", {"class": "gridViewReportBuilderWide"})
+            avg_scores = []
+            names = []
+            count = 1
+            dic = {}
+            row_counter = 0
+            for row in table.find_all('tr')[1:]:
+                col = row.find_all('td')
+                row_counter = row_counter + 1
+                if len(col) == 22:
+                    name = col[0].find(text=True)
+                    names.append(name)
+                    # if name.split(' ')[1] == "Victoria" or name.split(' ')[1] == "Jordan" or name.split(' ')[1] == "Larissa":
+                    #     print ""
+                    GP = col[1].find(text=True)
+                    #
+                    # average = field 1
+                    average = col[3].find(text=True)
+                    # OB = field 2
+                    OB = col[17].find(text=True)
+                    # SLG = field 3
+                    SLG = col[12].find(text=True)
+                    #
+                    avg_scores.append(average)
+                    R = col[5].find(text=True)
+                    # 2B
+                    TwoB = col[7].find(text=True)
+                    # 3B
+                    ThreeB = col[8].find(text=True)
+                    # HR
+                    HR = col[9].find(text=True)
+                    #RBI
+                    RBI = col[10].find(text=True)
+                    # BB
+                    BB = col[13].find(text=True)
+                    # K not found
+                    # SB
+                    SB = col[20].find(text=True)
+
+                    try:
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                    if flag == 1:
+                                        print "1"
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + average
+                                        paragraph.text = average
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 2:
+                                        print "2"
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + OB
+                                        paragraph.text = OB
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 3:
+                                        print "3"
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + SLG
+                                        paragraph.text = SLG
+                                        flag = flag + 1
+                                        continue
+                                    if flag > 3:
+                                        # print paragraph.text + '\n'
+                                        print "FLAG==" + str(flag) + " "+ name
+
+                                        if paragraph.text.__contains__("RN-"):
+                                            print 'RN found' 
+                                            paragraph.text = "R-" + R
+
+                                        if paragraph.text.__contains__("RBI-"):
+                                            print 'RBI found'
+                                            paragraph.text = "RBI-" + RBI
+
+                                        if paragraph.text.__contains__('2B-'):
+                                            print '2B found'
+                                            paragraph.text = "2B-" + TwoB
+
+                                        if paragraph.text.__contains__('3B-'):
+                                            print '3B found'
+                                            paragraph.text = "3B-" + ThreeB
+
+                                        if paragraph.text.__contains__('HR-'):
+                                            print 'HR found'
+                                            paragraph.text = "HR- " + HR
+
+                                        if paragraph.text.__contains__('BB-'):
+                                            print 'BB found'
+                                            paragraph.text = "BB- " + BB
+
+                                        if paragraph.text.__contains__('K-'):
+                                            print 'K found'
+
+                                        if paragraph.text.__contains__('SB-'):
+                                            print 'SB found'
+                                            paragraph.text = "SB- " + SB
+
+                                        if paragraph.text == (name.split(', ')[0]):
+                                            print "->END: " + paragraph.text
+                                            flag = 0
+                                            break
+
+                                        if paragraph.text != (name.split(', ')[0]):
+                                            print "->NO_END: " + paragraph.text
+                                        
+                                    if paragraph.text == name.split(' ')[1]:
+                                        # if paragraph.text  == "Victoria" or paragraph.text == "Jordan" or paragraph.text == "Larissa":
+                                        #     print "-> INSERT NEW METHOD FOR " + paragraph.text
+                                        flag = flag + 1
+                                        print  "->START: " + paragraph.text 
+                                        
+                                        # scan has a dictionary of all the names found on the website
+                                        # the program will check whether or not a first name has already been recorded
+                                        # if it has, then the counter will go up from 1 to 2
+                                        # if the counter is more than 1, then the program will have to match the specific name
+                                        # from the document with a matching number
+                                        # scan = dic.keys()
+                                        # for index in scan:
+                                        #     if index.__contains__(name.split(' ')[1]):
+                                        #         switch = True
+                                        #         count = count + 1
+                                        #         dic[name] = count
+                                        #         count = 1
+                                        # if switch == True:
+                                        #     continue
+                                        # dic[name] = count
+
+                    except IndexError:
+                        print "list index out of range"
+
+            print "almost done"
+            print "Check on these players' stats."
+            for name in dic.keys():
+                if dic[name] > 1:
+                    print name + '\n'
+            print " Information might be wrong due to multiple first names appearing."
+            # document.add_table(1, 2, style=None)
+            document.save(newDocDirectory + "/Softball Updated File.docx")
+            newDocName = "/Softball Updated Filev2.docx"
+            self.convertSoftball_LOB(newDocDirectory, newDocName)
+            sys.exit()
+
+    def convertSoftball_LOB (self, newDocDirectory, newDocName):
+            # Reading docx file
+            import sys
+            from docx import Document
+            document = Document(newDocDirectory + newDocName)
+            tables = document.tables
+            section = []
+            i = 0
+            for table in tables:
+                section.append(table)
+            # document.save('MEN Game Notes Hitting_Updated.docx')
+            #
+            working = section[1]
+            # self.write("Reading document...\n")
+            content = []
+            flag = 0
+            lastNameCounter = 0
+            # Import library for reading website
+            from bs4 import BeautifulSoup
+            import urllib2
+        # import pandas as pd
+            # download html from link
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&sea=NAIWBA_2018&team=1501"
+            page = urllib2.urlopen(url)
+            soup = BeautifulSoup(page, "html.parser")
+            table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
+            avg_scores = []
+            names = []
+            count = 1
+            dic = {}
+            row_counter = 0
+            for row in table.find_all('tr')[1:]:
+                col = row.find_all('td')
+                row_counter = row_counter + 1
+                if len(col) == 26:
+                    
+                    name = col[0].find(text=True)
+                    names.append(name)
+                    print name
+                    #ERA-1 F2
+                    #W-2 F1
+                    #L-3 F1
+                    #GP-4
+                    # GS-5
+                    # CG-6 F3
+                    # IP-10
+                    # H-11
+                    # BB-14
+                    # KS-??
+                    # OBA-20
+                    # HR-18
+
+                    ERA = col[1].find(text=True)
+                    W = col[2].find(text=True)
+                    L = col[3].find(text=True)
+                    GP = col[4].find(text=True)
+                    GS = col[5].find(text=True)
+                    CG = col[6].find(text=True)
+                    IP = col[10].find(text=True)
+                    H = col[11].find(text=True)
+                    BB = col[14].find(text=True)
+                    HR = col[18].find(text=True)
+
+
+                    try:
+                        for row in working.rows:
+                            for cell in row.cells:
+                                for index, paragraph in enumerate(cell.paragraphs):
+                                    content.append(paragraph.text)
+                                    switch = False
+                                    if flag == 1:
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + average
+                                        paragraph.text = "W:"+W+"L:"+L
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 2:
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + OB
+                                        paragraph.text = ERA
+                                        flag = flag + 1
+                                        continue
+                                    if flag == 3:
+                                        # print "doc: " + paragraph.text
+                                        # print "website: " + SLG
+                                        paragraph.text = CG
+                                        flag = flag + 1
+                                        continue
+                                    if flag > 3:
+                                        # print paragraph.text + '\n'
+
+                                        if paragraph.text.__contains__("GP-"):
+                                            print 'GP found'
+                                            paragraph.text = "GP-" + GP
+
+                                        if paragraph.text.__contains__("GS-"):
+                                            print 'GS found'
+                                            paragraph.text = "GS-" + GS
+
+                                        if paragraph.text.__contains__('IP-'):
+                                            print 'IP found'
+                                            paragraph.text = "IP-" + IP
+
+                                        if paragraph.text.__contains__('H-'):
+                                            print 'H found'
+                                            paragraph.text = "H-" + H
+
+                                        if paragraph.text.__contains__('BB-'):
+                                            print 'BB found'
+                                            paragraph.text = "BB-" + BB
+
+                                        if paragraph.text.__contains__('HR-'):
+                                            print 'HR found'
+                                            paragraph.text = "HR-" + HR
+
+                                        if paragraph.text == (name.split(', ')[0]):
+                                            flag = 0
+                                            break
+
+                                    if paragraph.text == name.split(' ')[1]:
+                                        flag = 0
+                                        # if paragraph.text  == "Victoria" or paragraph.text == "Jordan" or paragraph.text == "Larissa":
+                                        #     print "-> INSERT NEW METHOD FOR " + paragraph.text
+                                        flag = flag + 1
+                                        print paragraph.text
+                                        # scan has a dictionary of all the names found on the website
+                                        # the program will check whether or not a first name has already been recorded
+                                        # if it has, then the counter will go up from 1 to 2
+                                        # if the counter is more than 1, then the program will have to match the specific name
+                                        # from the document with a matching number
+                                        scan = dic.keys()
+                                        for index in scan:
+                                            if index.__contains__(name.split(' ')[1]):
+                                                switch = True
+                                                count = count + 1
+                                                dic[name] = count
+                                                count = 1
+                                        if switch == True:
+                                            continue
+                                        dic[name] = count
+
+                    except IndexError:
+                        print "list index out of range"
+
+            print "almost done"
+            print "Check on these players' stats."
+            for name in dic.keys():
+                if dic[name] > 1:
+                    print name + '\n'
+            print " Information might be wrong due to multiple first names appearing."
+            # document.add_table(1, 2, style=None)
+            document.save(newDocDirectory + "/newDoc3.docx")
+            print "-> SUCCESS NEW METHOD"
+            sys.exit()
     def convertBaseball(self):
         # Reading docx file
         import sys
@@ -229,7 +620,7 @@ class UI(Frame):
         import urllib2
        # import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2017&team=9101"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2018&team=9101"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -244,28 +635,44 @@ class UI(Frame):
             if len(col) == 22:
                 name = col[0].find(text=True)
                 names.append(name)
+                print "NAME: " + name
                 GP = col[1].find(text=True)
                 #
                 # average = field 1
                 average = col[3].find(text=True)
+                print "AVG: " + average
                 # OB = field 2
                 OB = col[17].find(text=True)
+                print "OB: " + OB
                 # SLG = field 3
                 SLG = col[12].find(text=True)
+                print "SLG: " + SLG
                 #
                 avg_scores.append(average)
                 R = col[5].find(text=True)
+                print "R: " + R
                 # 2B
                 TwoB = col[7].find(text=True)
+                print "TwoB: " + TwoB
                 # 3B
                 ThreeB = col[8].find(text=True)
+                print "ThreeB: " + ThreeB
                 # HR
                 HR = col[9].find(text=True)
+                print "HR: " + HR
+                #RBI
+                RBI = col[10].find(text=True)
+                print "RBI: " + RBI
                 # BB
                 BB = col[13].find(text=True)
+                print "BB: " + BB
+                # SO/K/KS
+                SO = col[15].find(text=True)
+                print "SO: " + SO
                 # K not found
                 # SB
                 SB = col[20].find(text=True)
+                print "SB: " + SB
 
                 try:
                     for row in working.rows:
@@ -275,56 +682,74 @@ class UI(Frame):
                                 switch = False
                                 if flag == 1:
                                     # print "doc: " + paragraph.text
-                                    # print "website: " + average
+                                    print "website: " + average
                                     paragraph.text = average
                                     flag = flag + 1
                                     continue
                                 if flag == 2:
                                     # print "doc: " + paragraph.text
-                                    # print "website: " + OB
+                                    print "website: " + OB
                                     paragraph.text = OB
                                     flag = flag + 1
                                     continue
                                 if flag == 3:
                                     # print "doc: " + paragraph.text
-                                    # print "website: " + SLG
+                                    print "website: " + SLG
                                     paragraph.text = SLG
                                     flag = flag + 1
                                     continue
                                 if flag > 3:
                                     # print paragraph.text + '\n'
 
+                                    if paragraph.text.__contains__('R-'):
+                                        print 'R found ' + paragraph.text + str(R)+ " " + str(flag)
+                                        paragraph.text = "R- " + R
 
-                                    if paragraph.text.__contains__('2B'):
-                                        print '2B found'
-                                        paragraph.text = "2B - " + TwoB
+                                    if paragraph.text.__contains__('RBI-'):
+                                        print 'RBI found' + paragraph.text +  str(RBI) + " " + str(flag)
+                                        paragraph.text = "RBI- " + RBI 
 
-                                    if paragraph.text.__contains__('3B'):
-                                        print '3B found'
-                                        paragraph.text = "3B - " + ThreeB
+                                    if paragraph.text.__contains__('2B-'):
+                                        print '2B found ' + paragraph.text +  str(TwoB)+ " " + str(flag)
+                                        paragraph.text = "2B- " + TwoB
 
-                                    if paragraph.text.__contains__('HR'):
-                                        print 'HR found'
-                                        paragraph.text = "HR - " + HR
+                                    if paragraph.text.__contains__('3B-'):
+                                        print '3B found ' + paragraph.text +  str(ThreeB) + " " + str(flag)
+                                        paragraph.text = "3B- " + ThreeB
 
-                                    if paragraph.text.__contains__('BB'):
-                                        print 'BB found'
-                                        paragraph.text = "BB - " + BB
+                                    if paragraph.text.__contains__('HR-'):
+                                        print 'HR found' + paragraph.text +  str(HR) + " " + str(flag)
+                                        paragraph.text = "HR- " + HR
 
-                                    if paragraph.text.__contains__('K'):
-                                        print 'K found'
+                                    if paragraph.text.__contains__('BB-'):
+                                        print 'BB found' + paragraph.text +  str(BB)+ " " + str(flag)
+                                        paragraph.text = "BB- " + BB
 
-                                    if paragraph.text.__contains__('SB'):
-                                        print 'SB found'
-                                        paragraph.text = "SB - " + SB
-
-                                    if paragraph.text == (name.split(', ')[0]):
+                                    if paragraph.text.__contains__('K-'):
+                                        print 'K found' + paragraph.text +  str(SO)+ " " + str(flag)
+                                        paragraph.text = "K- " + SO
+                            
+                                    if paragraph.text.__contains__('SB-'):
+                                        print str(flag)
+                                        print 'SB found' + paragraph.text +  str(SB)
+                                        paragraph.text = "SB- " + SB
                                         flag = 0
                                         break
 
+                                    # if paragraph.text == (name.split(', ')[0]):
+                                    #     print "-> END: " + name.split(', ')[0]
+                                    #     flag = 0
+                                    #     break
+                                    
+                                    # if paragraph.text != (name.split(', ')[1]):
+                                    #     print "->NO_END: " + paragraph.text
+                                    #     if paragraph.text == ("Alexander"):
+                                    #         print "******************"
+                                        
+
                                 if paragraph.text == name.split(' ')[1]:
                                     flag = flag + 1
-                                    print paragraph.text
+                                    print "-> BEGIN: " + paragraph.text
                                     # scan has a dictionary of all the names found on the website
                                     # the program will check whether or not a first name has already been recorded
                                     # if it has, then the counter will go up from 1 to 2
@@ -352,6 +777,141 @@ class UI(Frame):
         print " Information might be wrong due to multiple first names appearing."
         document.add_table(1, 2, style=None)
         document.save(newDocDirectory + "/Baseball Updated File.docx")
+        sys.exit()
+
+    def convertBaseballPitching(self):
+        # Reading docx file
+        import sys
+        from docx import Document
+        document = Document(oldDocName)
+        tables = document.tables
+        section = []
+        i = 0
+        for table in tables:
+            section.append(table)
+        # document.save('MEN Game Notes Hitting_Updated.docx')
+        #
+        working = section[1]
+        # self.write("Reading document...\n")
+        content = []
+        flag = 0
+        lastNameCounter = 0
+        # Import library for reading website
+        from bs4 import BeautifulSoup
+        import urllib2
+       # import pandas as pd
+        # download html from link
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2018&team=9101"
+        page = urllib2.urlopen(url)
+        soup = BeautifulSoup(page, "html.parser")
+        table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
+        avg_scores = []
+        names = []
+        count = 1
+        dic = {}
+        row_counter = 0
+        for row in table.find_all('tr')[1:]:
+            col = row.find_all('td')
+            row_counter = row_counter + 1
+            if len(col) == 26:
+                name = col[0].find(text=True)
+                names.append(name)
+                print "NAME: " + name                
+                W = col[2].find(text=True)
+                print "W: " + W
+                L = col[3].find(text=True)
+                print "L: " + L
+                ERA = col[1].find(text=True)
+                print "ERA: " + ERA
+                IP = col[10].find(text=True)
+                print "IP: " + IP
+                BB = col[14].find(text=True)
+                print "BB: " + BB
+                HBP = col[22].find(text=True)
+                print "HBP: " + HBP
+     
+
+                try:
+                    for row in working.rows:
+                        for cell in row.cells:
+                            for index, paragraph in enumerate(cell.paragraphs):
+                                content.append(paragraph.text)
+                                switch = False
+                                if flag == 1:
+                                    print "W-" + W
+                                    print "L-" + L
+                                    paragraph.text = "W-" + W + "L-" + L
+                                    flag = flag + 1
+                                    continue
+                                if flag == 2:
+                                    print "ERA-" +ERA
+                                    paragraph.text = ERA
+                                    flag = flag + 1
+                                    continue
+                                if flag == 3:
+                                    # print "doc: " + paragraph.text
+                                    print "IP-" + IP
+                                    paragraph.text = IP
+                                    flag = flag + 1
+                                    continue
+                                if flag > 3:
+                                    if paragraph.text.__contains__('WHIP'):
+                                        print "WHIP found"
+
+                                    if paragraph.text.__contains__('K'):
+                                        print "K found"
+
+                                    if paragraph.text.__contains__('BB'):
+                                        print 'BB found ' + paragraph.text +  str(BB) + " " + str(flag)
+                                        paragraph.text = "BB- " + BB
+
+                                    if paragraph.text.__contains__('HBP'):
+                                        print 'HBP found' + paragraph.text +  str(HBP) + " " + str(HBP)
+                                        paragraph.text = "HBP- " + HBP
+                                        flag = 0
+                                        break
+
+                                    # if paragraph.text == (name.split(', ')[0]):
+                                    #     print "-> END: " + name.split(', ')[0]
+                                    #     flag = 0
+                                    #     break
+                                    
+                                    # if paragraph.text != (name.split(', ')[1]):
+                                    #     print "->NO_END: " + paragraph.text
+                                    #     if paragraph.text == ("Alexander"):
+                                    #         print "******************"
+                                        
+
+                                if paragraph.text == name.split(' ')[1]:
+                                    flag = flag + 1
+                                    print "-> BEGIN: " + paragraph.text
+                                    # scan has a dictionary of all the names found on the website
+                                    # the program will check whether or not a first name has already been recorded
+                                    # if it has, then the counter will go up from 1 to 2
+                                    # if the counter is more than 1, then the program will have to match the specific name
+                                    # from the document with a matching number
+                                    scan = dic.keys()
+                                    for index in scan:
+                                        if index.__contains__(name.split(' ')[1]):
+                                            switch = True
+                                            count = count + 1
+                                            dic[name] = count
+                                            count = 1
+                                    if switch == True:
+                                        continue
+                                    dic[name] = count
+
+                except IndexError:
+                    print "list index out of range"
+
+        print "almost done"
+        print "Check on these players' stats."
+        for name in dic.keys():
+            if dic[name] > 1:
+                print name + '\n'
+        print " Information might be wrong due to multiple first names appearing."
+        document.add_table(1, 2, style=None)
+        document.save(newDocDirectory + "/Baseball_Pitchers Updated File.docx")
         sys.exit()
 
     def convertGoalie(self, newDocName, gender):
