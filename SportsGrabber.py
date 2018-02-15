@@ -634,6 +634,8 @@ class UI(Frame):
             row_counter = row_counter + 1
             if len(col) == 22:
                 name = col[0].find(text=True)
+                if name == "Merken, Andrew":
+                    break
                 names.append(name)
                 print "NAME: " + name
                 GP = col[1].find(text=True)
@@ -821,6 +823,10 @@ class UI(Frame):
                 print "W: " + W
                 L = col[3].find(text=True)
                 print "L: " + L
+                GP = col[4].find(text=True)
+                print "GP: " + GP
+                BatAVG = col[20].find(text=True)
+                print "BatAVG: " + BatAVG
                 ERA = col[1].find(text=True)
                 print "ERA: " + ERA
                 IP = col[10].find(text=True)
@@ -831,6 +837,8 @@ class UI(Frame):
                 print "SO: " + SO
                 HBP = col[22].find(text=True)
                 print "HBP: " + HBP
+                #GP
+                #BAVG
      
 
                 try:
@@ -871,6 +879,14 @@ class UI(Frame):
                                     if paragraph.text.__contains__('HBP'):
                                         print 'HBP found' + paragraph.text +  str(HBP) + " " + str(HBP)
                                         paragraph.text = "HBP- " + HBP
+
+                                    if paragraph.text.__contains__('GP-'):
+                                        print 'GP- found ' + paragraph.text +  str(GP) + " " + str(flag)
+                                        paragraph.text = "GP- " + GP
+                                    
+                                    if paragraph.text.__contains__('B/Avg'):
+                                        print 'B/Avg- found ' + paragraph.text +  str(BatAVG) + " " + str(flag)
+                                        paragraph.text = "B/Avg- " + BatAVG
                                         flag = 0
                                         break
 
@@ -884,7 +900,7 @@ class UI(Frame):
                                     #     if paragraph.text == ("Alexander"):
                                     #         print "******************"
                                         
-
+                                
                                 if paragraph.text == name.split(' ')[1]:
                                     flag = flag + 1
                                     print "-> BEGIN: " + paragraph.text
