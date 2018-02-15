@@ -886,7 +886,7 @@ class UI(Frame):
                                     
                                     if paragraph.text.__contains__('B/Avg'):
                                         print 'B/Avg- found ' + paragraph.text +  str(BatAVG) + " " + str(flag)
-                                        paragraph.text = "B/Avg- " + BatAVG
+                                        paragraph.text = BatAVG
                                         flag = 0
                                         break
 
