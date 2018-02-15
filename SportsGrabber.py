@@ -82,7 +82,7 @@ class UI(Frame):
         Frame.__init__(self)
         self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
-        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenu, height=3)
+        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
         self.basketballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
@@ -92,7 +92,7 @@ class UI(Frame):
         self.volleyballOption.pack(fill=X)
         self.womanBasketballOption = Button (win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
         self.womanBasketballOption.pack(fill=X)
-        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.baseballMenuPitching, height=3)
+        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
         self.manBasketballOption.pack(fill=X)
         self.softballOption = Button(win, text="Softball", command = self.softballMenu, height=3)
         self.softballOption.pack(fill=X)
@@ -827,6 +827,8 @@ class UI(Frame):
                 print "IP: " + IP
                 BB = col[14].find(text=True)
                 print "BB: " + BB
+                SO = col[15].find(text=True)
+                print "SO: " + SO
                 HBP = col[22].find(text=True)
                 print "HBP: " + HBP
      
@@ -858,8 +860,9 @@ class UI(Frame):
                                     if paragraph.text.__contains__('WHIP'):
                                         print "WHIP found"
 
-                                    if paragraph.text.__contains__('K'):
-                                        print "K found"
+                                    if paragraph.text.__contains__('K-'):
+                                        print 'K found' + paragraph.text +  str(SO)+ " " + str(flag)
+                                        paragraph.text = "K-" + SO
 
                                     if paragraph.text.__contains__('BB'):
                                         print 'BB found ' + paragraph.text +  str(BB) + " " + str(flag)
