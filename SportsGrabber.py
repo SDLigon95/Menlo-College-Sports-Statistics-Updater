@@ -703,7 +703,7 @@ class UI(Frame):
                                 if flag > 3:
                                     # print paragraph.text + '\n'
 
-                                    if paragraph.text.__contains__('R-'):
+                                    if paragraph.text.startswith('R-'):
                                         print 'R found ' + paragraph.text + str(R)+ " " + str(flag)
                                         paragraph.text = "R- " + R
 
@@ -719,11 +719,11 @@ class UI(Frame):
                                         print '3B found ' + paragraph.text +  str(ThreeB) + " " + str(flag)
                                         paragraph.text = "3B- " + ThreeB
 
-                                    if paragraph.text.__contains__('HR-'):
+                                    if paragraph.text.startswith('HR-'):
                                         print 'HR found' + paragraph.text +  str(HR) + " " + str(flag)
                                         paragraph.text = "HR- " + HR
 
-                                    if paragraph.text.__contains__('BB-'):
+                                    if paragraph.text.startswith('BB-'):
                                         print 'BB found' + paragraph.text +  str(BB)+ " " + str(flag)
                                         paragraph.text = "BB- " + BB
 
@@ -872,7 +872,7 @@ class UI(Frame):
                                         print 'K found' + paragraph.text +  str(SO)+ " " + str(flag)
                                         paragraph.text = "K-" + SO
 
-                                    if paragraph.text.__contains__('BB'):
+                                    if paragraph.text.startswith('BB'):
                                         print 'BB found ' + paragraph.text +  str(BB) + " " + str(flag)
                                         paragraph.text = "BB- " + BB
 
