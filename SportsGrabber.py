@@ -58,10 +58,10 @@ class UI(Frame):
         self.saveAsButton.destroy()
         self.convertButton.destroy()
         self.backButton.destroy()
-        self.basketballOption = Button(win, text="Baseball", command=self.baseballMenu, height=3)
+        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
-        self.basketballOptionPitchers = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
-        self.basketballOptionPitchers.pack(fill=X)
+        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
+        self.basketballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
@@ -100,6 +100,7 @@ class UI(Frame):
 
     def baseballMenu(self):
         self.basketballPitchersOption.destroy()
+        self.basketballOption.destroy()
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
         self.softballOption.destroy()
@@ -139,7 +140,7 @@ class UI(Frame):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
         self.softballOption.destroy()
-        # self.baseballOption.destroy()
+        # self.basketballPitchersOption.destroy()()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -156,7 +157,7 @@ class UI(Frame):
 
     def womanSoccerMenu(self):
         self.volleyballOption.destroy()
-        self.baseballOption.destroy()
+        self.basketballPitchersOption.destroy()
         self.softballOption.destroy()
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
@@ -175,8 +176,9 @@ class UI(Frame):
 
     def womanBasketballMenu(self):
         self.volleyballOption.destroy()
+        self.basketballPitchersOption.destroy()
         self.basketballOption.destroy()
-        self.baseballOption.destroy()
+        # self.baseballOption.destroy()
         self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
@@ -629,6 +631,7 @@ class UI(Frame):
         count = 1
         dic = {}
         row_counter = 0
+        new_switch = FALSE
         for row in table.find_all('tr')[1:]:
             col = row.find_all('td')
             row_counter = row_counter + 1
@@ -703,6 +706,10 @@ class UI(Frame):
                                 if flag > 3:
                                     # print paragraph.text + '\n'
 
+                                    if paragraph.text == name.split(', ')[0]:
+                                        print "----> " + paragraph.text + " PASSED!!!"
+                                        new_switch = TRUE
+
                                     if paragraph.text.startswith('R-'):
                                         print 'R found ' + paragraph.text + str(R)+ " " + str(flag)
                                         paragraph.text = "R- " + R
@@ -736,7 +743,15 @@ class UI(Frame):
                                         print 'SB found' + paragraph.text +  str(SB)
                                         paragraph.text = "SB- " + SB
                                         flag = 0
+                                        if new_switch != TRUE:
+                                            print name.split(', ')[0]
+                                            print "Mismatched Last Name DETECTED" 
+                                        new_switch = FALSE
+                                        
                                         break
+                                    
+                                    # else:
+                                    #     print paragraph.text
 
                                     # if paragraph.text == (name.split(', ')[0]):
                                     #     print "-> END: " + name.split(', ')[0]
@@ -762,8 +777,10 @@ class UI(Frame):
                                         if index.__contains__(name.split(' ')[1]):
                                             switch = True
                                             count = count + 1
+                                            print "---> "+name.split(' ')[1] + " " + str(count)
                                             dic[name] = count
-                                            count = 1
+                                            # count = 1
+                                            
                                     if switch == True:
                                         continue
                                     dic[name] = count
@@ -784,8 +801,16 @@ class UI(Frame):
     def convertBaseballPitching(self):
         # Reading docx file
         import sys
-        from docx import Document
+        from docx import Document 
+        from docx.shared import Pt
+        #
         document = Document(oldDocName)
+        #
+        style = document.styles['Normal']
+        font = style.font
+        font.name = 'Arial Narrow'
+        font.size = Pt(9)
+        #
         tables = document.tables
         section = []
         i = 0
@@ -870,6 +895,7 @@ class UI(Frame):
 
                                     if paragraph.text.__contains__('K-'):
                                         print 'K found' + paragraph.text +  str(SO)+ " " + str(flag)
+                                        paragraph.style = document.styles['Normal']
                                         paragraph.text = "K-" + SO
 
                                     if paragraph.text.startswith('BB'):
