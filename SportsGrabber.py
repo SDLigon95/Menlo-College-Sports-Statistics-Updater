@@ -140,7 +140,7 @@ class UI(Frame):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
         self.softballOption.destroy()
-        # self.basketballPitchersOption.destroy()()
+        self.basketballPitchersOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -280,6 +280,7 @@ class UI(Frame):
             import sys
             from docx import Document
             document = Document(oldDocName)
+            print (oldDocName)
             tables = document.tables
             section = []
             i = 0
@@ -337,6 +338,7 @@ class UI(Frame):
                     BB = col[13].find(text=True)
                     # K not found
                     # SB
+                    SO = col[15].find(text=True)
                     SB = col[20].find(text=True)
 
                     try:
@@ -370,44 +372,47 @@ class UI(Frame):
                                         # print paragraph.text + '\n'
                                         print "FLAG==" + str(flag) + " "+ name
 
-                                        if paragraph.text.__contains__("RN-"):
-                                            print 'RN found' 
+                                        if paragraph.text.startswith("R-"):
+                                            print 'R found' 
                                             paragraph.text = "R-" + R
 
-                                        if paragraph.text.__contains__("RBI-"):
+                                        if paragraph.text.startswith("RBI-"):
                                             print 'RBI found'
                                             paragraph.text = "RBI-" + RBI
 
-                                        if paragraph.text.__contains__('2B-'):
+                                        if paragraph.text.startswith('2B-'):
                                             print '2B found'
                                             paragraph.text = "2B-" + TwoB
 
-                                        if paragraph.text.__contains__('3B-'):
+                                        if paragraph.text.startswith('3B-'):
                                             print '3B found'
                                             paragraph.text = "3B-" + ThreeB
 
-                                        if paragraph.text.__contains__('HR-'):
+                                        if paragraph.text.startswith('HR-'):
                                             print 'HR found'
                                             paragraph.text = "HR- " + HR
 
-                                        if paragraph.text.__contains__('BB-'):
+                                        if paragraph.text.startswith('BB-'):
                                             print 'BB found'
                                             paragraph.text = "BB- " + BB
 
-                                        if paragraph.text.__contains__('K-'):
+                                        if paragraph.text.startswith('K-'):
+                                            paragraph.text = "K-" + SO
                                             print 'K found'
 
-                                        if paragraph.text.__contains__('SB-'):
+                                        if paragraph.text.startswith('SB-'):
                                             print 'SB found'
                                             paragraph.text = "SB- " + SB
-
-                                        if paragraph.text == (name.split(', ')[0]):
-                                            print "->END: " + paragraph.text
                                             flag = 0
                                             break
 
-                                        if paragraph.text != (name.split(', ')[0]):
-                                            print "->NO_END: " + paragraph.text
+                                        # if paragraph.text == (name.split(', ')[0]):
+                                        #     print "->END: " + paragraph.text
+                                        #     flag = 0
+                                        #     break
+
+                                        # if paragraph.text != (name.split(', ')[0]):
+                                        #     print "->NO_END: " + paragraph.text
                                         
                                     if paragraph.text == name.split(' ')[1]:
                                         # if paragraph.text  == "Victoria" or paragraph.text == "Jordan" or paragraph.text == "Larissa":
@@ -442,15 +447,25 @@ class UI(Frame):
             print " Information might be wrong due to multiple first names appearing."
             # document.add_table(1, 2, style=None)
             document.save(newDocDirectory + "/Softball Updated File.docx")
-            newDocName = "/Softball Updated Filev2.docx"
+            newDocName = "/Softball Updated File.docx"
             self.convertSoftball_LOB(newDocDirectory, newDocName)
-            sys.exit()
+            # sys.exit()
 
     def convertSoftball_LOB (self, newDocDirectory, newDocName):
             # Reading docx file
             import sys
             from docx import Document
+            from docx.shared import Pt
+
+            
             document = Document(newDocDirectory + newDocName)
+
+            style = document.styles['Normal']
+            font = style.font
+            font.name = 'Arial Narrow'
+            font.size = Pt(9)
+            # font.bold = True
+
             tables = document.tables
             section = []
             i = 0
@@ -508,6 +523,8 @@ class UI(Frame):
                     H = col[11].find(text=True)
                     BB = col[14].find(text=True)
                     HR = col[18].find(text=True)
+                    SO = col[15].find(text=True)
+                    OBA = col[20].find(text=True)
 
 
                     try:
@@ -557,16 +574,24 @@ class UI(Frame):
                                             print 'BB found'
                                             paragraph.text = "BB-" + BB
 
+                                        if paragraph.text.__contains__('KS-'):
+                                            print 'KS found'
+                                            paragraph.text = "KS-" + SO
+                                        
+                                        if paragraph.text.startswith('OBA-'):
+                                            print 'OBA found'
+                                            paragraph.text = "OBA-" + OBA
+
                                         if paragraph.text.__contains__('HR-'):
                                             print 'HR found'
                                             paragraph.text = "HR-" + HR
-
-                                        if paragraph.text == (name.split(', ')[0]):
                                             flag = 0
                                             break
 
+                        
+                                            
+
                                     if paragraph.text == name.split(' ')[1]:
-                                        flag = 0
                                         # if paragraph.text  == "Victoria" or paragraph.text == "Jordan" or paragraph.text == "Larissa":
                                         #     print "-> INSERT NEW METHOD FOR " + paragraph.text
                                         flag = flag + 1
@@ -597,7 +622,7 @@ class UI(Frame):
                     print name + '\n'
             print " Information might be wrong due to multiple first names appearing."
             # document.add_table(1, 2, style=None)
-            document.save(newDocDirectory + "/newDoc3.docx")
+            document.save(newDocDirectory + newDocName)
             print "-> SUCCESS NEW METHOD"
             sys.exit()
     def convertBaseball(self):
