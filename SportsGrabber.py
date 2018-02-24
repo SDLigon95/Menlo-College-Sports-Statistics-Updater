@@ -499,6 +499,9 @@ class UI(Frame):
                     
                     name = col[0].find(text=True)
                     names.append(name)
+                    if (name=="Reyes, Sarah"):
+                        print "yay1234567890"
+                        break
                     print name
                     #ERA-1 F2
                     #W-2 F1
