@@ -315,6 +315,12 @@ class UI(Frame):
                     if name=="Kennedy, Jordan":
                         print "Kennedy, Jordan yay1234567890"
                         continue
+                    if name=="Cervantes, Victoria":
+                        print "Cervantes, Victoria yay1234567890"
+                        continue
+                    if name=="Martinez, Larissa":
+                        print "Martinez, Larissa yay1234567890"
+                        continue
                     names.append(name)
                     # if name.split(' ')[1] == "Victoria" or name.split(' ')[1] == "Jordan" or name.split(' ')[1] == "Larissa":
                     #     print ""
