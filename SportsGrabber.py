@@ -496,12 +496,11 @@ class UI(Frame):
                 col = row.find_all('td')
                 row_counter = row_counter + 1
                 if len(col) == 26:
-                    
                     name = col[0].find(text=True)
-                    names.append(name)
-                    if (name=="Reyes, Sarah"):
+                    if name=="Reyes, Sarah":
                         print "yay1234567890"
-                        break
+                        continue
+                    names.append(name)
                     print name
                     #ERA-1 F2
                     #W-2 F1
