@@ -312,6 +312,9 @@ class UI(Frame):
                 row_counter = row_counter + 1
                 if len(col) == 22:
                     name = col[0].find(text=True)
+                    if name=="Kennedy, Jordan":
+                        print "Kennedy, Jordan yay1234567890"
+                        continue
                     names.append(name)
                     # if name.split(' ')[1] == "Victoria" or name.split(' ')[1] == "Jordan" or name.split(' ')[1] == "Larissa":
                     #     print ""
@@ -370,39 +373,41 @@ class UI(Frame):
                                         continue
                                     if flag > 3:
                                         # print paragraph.text + '\n'
-                                        print "FLAG==" + str(flag) + " "+ name
+                                        # print "FLAG==" + str(flag) + " "+ name
+                                        if name.split(' ')[1].__contains__("Sarah"):
+                                            print "This is something: " +  name.split(' ')[1]
 
                                         if paragraph.text.startswith("R-"):
-                                            print 'R found' 
                                             paragraph.text = "R-" + R
+                                            print 'R found: '  + paragraph.text
 
                                         if paragraph.text.startswith("RBI-"):
-                                            print 'RBI found'
                                             paragraph.text = "RBI-" + RBI
+                                            print 'RBI found: ' + paragraph.text 
 
                                         if paragraph.text.startswith('2B-'):
-                                            print '2B found'
                                             paragraph.text = "2B-" + TwoB
+                                            print '2B found: ' + paragraph.text
 
                                         if paragraph.text.startswith('3B-'):
-                                            print '3B found'
                                             paragraph.text = "3B-" + ThreeB
+                                            print '3B found: ' + paragraph.text
 
                                         if paragraph.text.startswith('HR-'):
-                                            print 'HR found'
                                             paragraph.text = "HR- " + HR
+                                            print 'HR found: ' + paragraph.text
 
                                         if paragraph.text.startswith('BB-'):
-                                            print 'BB found'
                                             paragraph.text = "BB- " + BB
+                                            print 'BB found: ' + paragraph.text
 
                                         if paragraph.text.startswith('K-'):
                                             paragraph.text = "K-" + SO
-                                            print 'K found'
+                                            print 'K found: ' + paragraph.text
 
                                         if paragraph.text.startswith('SB-'):
-                                            print 'SB found'
                                             paragraph.text = "SB- " + SB
+                                            print 'SB found' + paragraph.text
                                             flag = 0
                                             break
 
@@ -556,27 +561,27 @@ class UI(Frame):
                                     if flag > 3:
                                         # print paragraph.text + '\n'
 
-                                        if paragraph.text.__contains__("GP-"):
+                                        if paragraph.text.startswith("GP-"):
                                             print 'GP found'
                                             paragraph.text = "GP-" + GP
 
-                                        if paragraph.text.__contains__("GS-"):
+                                        if paragraph.text.startswith("GS-"):
                                             print 'GS found'
                                             paragraph.text = "GS-" + GS
 
-                                        if paragraph.text.__contains__('IP-'):
+                                        if paragraph.text.startswith('IP-'):
                                             print 'IP found'
                                             paragraph.text = "IP-" + IP
 
-                                        if paragraph.text.__contains__('H-'):
+                                        if paragraph.text.startswith('H-'):
                                             print 'H found'
                                             paragraph.text = "H-" + H
 
-                                        if paragraph.text.__contains__('BB-'):
+                                        if paragraph.text.startswith('BB-'):
                                             print 'BB found'
                                             paragraph.text = "BB-" + BB
 
-                                        if paragraph.text.__contains__('KS-'):
+                                        if paragraph.text.startswith('KS-'):
                                             print 'KS found'
                                             paragraph.text = "KS-" + SO
                                         
@@ -584,7 +589,7 @@ class UI(Frame):
                                             print 'OBA found'
                                             paragraph.text = "OBA-" + OBA
 
-                                        if paragraph.text.__contains__('HR-'):
+                                        if paragraph.text.startswith('HR-'):
                                             print 'HR found'
                                             paragraph.text = "HR-" + HR
                                             flag = 0
