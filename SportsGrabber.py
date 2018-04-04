@@ -59,9 +59,11 @@ class UI(Frame):
         self.convertButton.destroy()
         self.backButton.destroy()
         self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
+        self.img = PhotoImage(file="./baseball_PNG19000.png")
+        self.basketballOption.config(image=img)
         self.basketballOption.pack(fill=X)
-        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
-        self.basketballPitchersOption.pack(fill=X)
+        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
+        self.baseballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
@@ -82,8 +84,8 @@ class UI(Frame):
         Frame.__init__(self)
         self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
         self.basketballOption.pack(fill=X)
-        self.basketballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
-        self.basketballPitchersOption.pack(fill=X)
+        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
+        self.baseballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
@@ -99,7 +101,7 @@ class UI(Frame):
         self.pack()
 
     def baseballMenu(self):
-        self.basketballPitchersOption.destroy()
+        self.baseballPitchersOption.destroy()
         self.basketballOption.destroy()
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
@@ -118,7 +120,7 @@ class UI(Frame):
         self.configure(background="white")
         self.pack()
     def baseballMenuPitching(self):
-        self.basketballPitchersOption.destroy()
+        self.baseballPitchersOption.destroy()
         self.basketballOption.destroy()
         self.volleyballOption.destroy()
         self.softballOption.destroy()
@@ -140,7 +142,7 @@ class UI(Frame):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
         self.softballOption.destroy()
-        self.basketballPitchersOption.destroy()
+        self.baseballPitchersOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
         self.womanBasketballOption.destroy()
@@ -157,7 +159,7 @@ class UI(Frame):
 
     def womanSoccerMenu(self):
         self.volleyballOption.destroy()
-        self.basketballPitchersOption.destroy()
+        self.baseballPitchersOption.destroy()
         self.softballOption.destroy()
         self.basketballOption.destroy()
         self.menSoccerOption.destroy()
@@ -176,7 +178,7 @@ class UI(Frame):
 
     def womanBasketballMenu(self):
         self.volleyballOption.destroy()
-        self.basketballPitchersOption.destroy()
+        self.baseballPitchersOption.destroy()
         self.basketballOption.destroy()
         # self.baseballOption.destroy()
         self.softballOption.destroy()
@@ -197,7 +199,7 @@ class UI(Frame):
     def manBasketballMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
-        self.baseballOption.destroy()
+        # self.baseballOption.destroy()
         self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
@@ -216,7 +218,7 @@ class UI(Frame):
     def menSoccerMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
-        self.baseballOption.destroy()
+        # self.baseballOption.destroy()
         self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
@@ -236,7 +238,8 @@ class UI(Frame):
     def volleyballMenu(self):
         self.volleyballOption.destroy()
         self.basketballOption.destroy()
-        self.baseballOption.destroy()
+        self.baseballPitchersOption.destroy()
+        # self.baseballOption.destroy()
         self.softballOption.destroy()
         self.menSoccerOption.destroy()
         self.womanSoccerOption.destroy()
@@ -304,7 +307,8 @@ class UI(Frame):
             table = soup.find("table", {"class": "gridViewReportBuilderWide"})
             avg_scores = []
             names = []
-            count = 1
+            count = 0
+
             dic = {}
             row_counter = 0
             for row in table.find_all('tr')[1:]:
@@ -356,6 +360,11 @@ class UI(Frame):
                                 for index, paragraph in enumerate(cell.paragraphs):
                                     content.append(paragraph.text)
                                     switch = False
+                                    # if paragraph.text == "Cassie" and name.split(' ')[1] == "Brooke":
+                                    #     count = count + 1
+                                    #     print "Cassie -> " + str(count)
+                                            
+                                        
                                     if flag == 1:
                                         print "1"
                                         # print "doc: " + paragraph.text
@@ -378,7 +387,7 @@ class UI(Frame):
                                         flag = flag + 1
                                         continue
                                     if flag > 3:
-                                        # print paragraph.text + '\n'
+                                        print "____*->" + paragraph.text + '\n'
                                         # print "FLAG==" + str(flag) + " "+ name
                                         if name.split(' ')[1].__contains__("Sarah"):
                                             print "This is something: " +  name.split(' ')[1]
@@ -426,6 +435,10 @@ class UI(Frame):
                                         #     print "->NO_END: " + paragraph.text
                                         
                                     if paragraph.text == name.split(' ')[1]:
+                                        if paragraph.text == "Brooke":
+                                            count = count + 1
+                                            print "LOOK OVER HERE" + str(count)
+                                            
                                         # if paragraph.text  == "Victoria" or paragraph.text == "Jordan" or paragraph.text == "Larissa":
                                         #     print "-> INSERT NEW METHOD FOR " + paragraph.text
                                         flag = flag + 1
