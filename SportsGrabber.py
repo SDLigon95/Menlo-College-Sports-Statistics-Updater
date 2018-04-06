@@ -58,8 +58,8 @@ class UI(Frame):
         self.saveAsButton.destroy()
         self.convertButton.destroy()
         self.backButton.destroy()
-        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
-        self.img = PhotoImage(file="./baseball_PNG19000.png")
+        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu)
+        self.img = PhotoImage(file="C:\Users\Scott Ligon\Desktop\Menlo-College-Sports-Statistics-Updater\baseball_PNG19000.gif")
         self.basketballOption.config(image=img)
         self.basketballOption.pack(fill=X)
         self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
@@ -82,8 +82,10 @@ class UI(Frame):
     def __init__(self):
         # Open and Convert button
         Frame.__init__(self)
-        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu, height=3)
-        self.basketballOption.pack(fill=X)
+        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu,width=30, height=30)
+        self.img = PhotoImage(file="./baseball_PNG19000.gif")
+        self.basketballOption.config(image=self.img)
+        self.basketballOption.pack()
         self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
         self.baseballPitchersOption.pack(fill=X)
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
