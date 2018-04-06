@@ -82,12 +82,14 @@ class UI(Frame):
     def __init__(self):
         # Open and Convert button
         Frame.__init__(self)
-        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu,width=30, height=30)
-        self.img = PhotoImage(file="./baseball_PNG19000.gif")
+        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu)
+        self.img = PhotoImage(file="./baseball_pitcher.gif")
         self.basketballOption.config(image=self.img)
         self.basketballOption.pack()
-        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
-        self.baseballPitchersOption.pack(fill=X)
+        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching)
+        self.img = PhotoImage(file="./baseball_pitcher.gif")
+        self.baseballPitchersOption.config(image=self.img)
+        self.baseballPitchersOption.pack()
         self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
         self.womanSoccerOption.pack(fill=X)
         self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
