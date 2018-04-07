@@ -11,6 +11,8 @@ sys.setdefaultencoding('utf8')
 win = Tk()
 win.geometry('575x357')  # Size 200, 200
 choice = 0
+menu_child = 0 
+menu_child_switch = 0
 
 
 class UI(Frame):
@@ -53,69 +55,153 @@ class UI(Frame):
                                         background='green', fg='white', width=45, height=4)
         self.convertButton.pack()
 
-    def destroyButtons(self):
+    def destroyButtons(self, menu_child):
+        
         self.openButton.destroy()
         self.saveAsButton.destroy()
         self.convertButton.destroy()
         self.backButton.destroy()
-        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu)
-        self.img = PhotoImage(file="C:\Users\Scott Ligon\Desktop\Menlo-College-Sports-Statistics-Updater\baseball_PNG19000.gif")
-        self.basketballOption.config(image=img)
-        self.basketballOption.pack(fill=X)
-        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching, height=3)
-        self.baseballPitchersOption.pack(fill=X)
-        self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
-        self.womanSoccerOption.pack(fill=X)
-        self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
-        self.menSoccerOption.pack(fill=X)
-        self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
-        self.volleyballOption.pack(fill=X)
-        self.womanBasketballOption = Button(win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
-        self.womanBasketballOption.pack(fill=X)
-        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
-        self.manBasketballOption.pack(fill=X)
-        self.softballOption = Button(win, text="Softball", command = self.softballMenu, height=3)
-        self.softballOption.pack(fill=X)
-        self.pack()
+        if (menu_child == 1):
+            self.baseballMenu()
+        if (menu_child == 2):
+            self.soccerMenu()
+        if (menu_child == 3):
+            self.basketballMenu()
+        if (menu_child == 0):
+            self.create_UI()
+        print str(menu_child)
+        
+      
 
-    # Create UI
+    # Program startup
     def __init__(self):
-        # Open and Convert button
+        self.create_UI()
+
+    #Create Main Menu UI    
+    def create_UI(self):
         Frame.__init__(self)
-        self.basketballOption = Button(win, text="Baseball Hitters", command=self.baseballMenu)
-        self.img = PhotoImage(file="./baseball_pitcher.gif")
-        self.basketballOption.config(image=self.img)
+        self.baseballOption = Button(win, text= "Baseball", command=self.baseballMenu)
+        self.img_baseball = PhotoImage(file="./baseball.gif")
+        self.baseballOption.config(image=self.img_baseball)
+        self.baseballOption.pack()
+        self.softballOption = Button(win, text="Softball", command = self.softballMenu)
+        self.img_softball = PhotoImage(file="./softball.gif")
+        self.softballOption.config(image=self.img_softball)
+        self.softballOption.pack()
+        self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu)
+        self.img_volleyball = PhotoImage(file="./volleyball.gif")
+        self.volleyballOption.config(image=self.img_volleyball)
+        self.volleyballOption.pack()
+        self.soccerOption = Button(win, text="Soccer", command=self.soccerMenu)
+        self.img_soccer = PhotoImage(file="./soccer.gif")
+        self.soccerOption.config(image=self.img_soccer)
+        self.soccerOption.pack()
+        self.basketballOption = Button(win, text="Basketball", command=self.basketballMenu)
+        self.img_basketball = PhotoImage(file="./basketball.gif")
+        self.basketballOption.config(image=self.img_basketball)
         self.basketballOption.pack()
-        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballMenuPitching)
-        self.img = PhotoImage(file="./baseball_pitcher.gif")
-        self.baseballPitchersOption.config(image=self.img)
-        self.baseballPitchersOption.pack()
-        self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu, height=3)
-        self.womanSoccerOption.pack(fill=X)
-        self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu, height=3)
-        self.menSoccerOption.pack(fill=X)
-        self.volleyballOption = Button(win, text="Volleyball", command=self.volleyballMenu, height=3)
-        self.volleyballOption.pack(fill=X)
-        self.womanBasketballOption = Button (win, text="Women's Basketball", command=self.womanBasketballMenu, height=3)
-        self.womanBasketballOption.pack(fill=X)
-        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu, height=3)
-        self.manBasketballOption.pack(fill=X)
-        self.softballOption = Button(win, text="Softball", command = self.softballMenu, height=3)
-        self.softballOption.pack(fill=X)
-        self.pack()
+
+
+    def destroyMenuChild(self,menu_child_switch):
+        print "This is used"
+        if (menu_child_switch ==1):
+            self.baseballHittersOption.destroy()
+            self.baseballPitchersOption.destroy()
+            
+        if menu_child_switch ==2:
+            self.womanSoccerOption.destroy()
+            self.menSoccerOption.destroy()
+          
+        if menu_child_switch ==3:
+            self.womanBasketballOption.destroy()
+            self.manBasketballOption.destroy()
+        self.backButton.destroy()
+        menu_child_switch = 0
+        self.create_UI()
+    #Used to destroy main menu layout (used in submenus)
+    def destroyMenuUI(self):
+        self.baseballOption.destroy()
+        self.softballOption.destroy()
+        self.volleyballOption.destroy()
+        self.soccerOption.destroy()
+        self.basketballOption.destroy()
+
+    # def returnMenuChild(self,menu_child):
+    #     if (menu_child==1):
+            
+    def printTest(self):
+        print "TESTING"
+  
+
 
     def baseballMenu(self):
+        menu_child = 0
+        menu_child_switch = 1
+        print ("You're here")
+        Frame.__init__(self)
+        self.destroyMenuUI()
+        self.baseballHittersOption = Button(win, text="Baseball Hitters", command=self.baseballHitterMenu)
+        self.img_baseballHitter = PhotoImage(file="./baseball_hitter.gif")
+        self.baseballHittersOption.config(image=self.img_baseballHitter)
+        self.baseballHittersOption.pack()
+        self.baseballPitchersOption = Button(win, text="Baseball Pitchers", command=self.baseballPitchingMenu)
+        self.img_baseballPitcher = PhotoImage(file="./baseball_pitcher.gif")
+        self.baseballPitchersOption.config(image=self.img_baseballPitcher)
+        self.baseballPitchersOption.pack()
+        self.backButton = Button(win, text="Back", command= lambda: self.destroyMenuChild(menu_child_switch))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
+        self.backButton.pack(side=LEFT)
+        # self.pack()
+        
+
+    def soccerMenu(self):
+        menu_child == 0
+        menu_child_switch = 2
+        print ("You're here")
+        Frame.__init__(self)
+        self.destroyMenuUI()
+        self.womanSoccerOption = Button(win, text="Women's Soccer", command=self.womanSoccerMenu)
+        self.img_womenSoccer = PhotoImage(file="./women_soccer.gif")
+        self.womanSoccerOption.config(image=self.img_womenSoccer)
+        self.womanSoccerOption.pack()
+        self.menSoccerOption = Button(win, text="Men's Soccer", command=self.menSoccerMenu)
+        self.img_menSoccer = PhotoImage(file="./men_soccer.gif")
+        self.menSoccerOption.config(image=self.img_menSoccer)
+        self.menSoccerOption.pack()
+        self.backButton = Button(win, text="Back", command= lambda: self.destroyMenuChild(menu_child_switch))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
+        self.backButton.pack(side=LEFT)
+
+    def basketballMenu(self):
+        menu_child == 0
+        menu_child_switch = 3
+        print ("You're here")
+        Frame.__init__(self)
+        self.destroyMenuUI()
+        self.womanBasketballOption = Button (win, text="Women's Basketball", command=self.womanBasketballMenu)
+        self.img_womenBasketball = PhotoImage(file="./women_basketball.gif")
+        self.womanBasketballOption.config(image=self.img_womenBasketball)
+        self.womanBasketballOption.pack()
+        self.manBasketballOption = Button(win, text="Men's Basketball", command=self.manBasketballMenu)
+        self.img_menBasketball = PhotoImage(file="./men_basketball.gif")
+        self.manBasketballOption.config(image=self.img_menBasketball)
+        self.manBasketballOption.pack()
+        self.backButton = Button(win, text="Back", command= lambda: self.destroyMenuChild(menu_child_switch))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
+        self.backButton.pack(side=LEFT)
+
+
+    def baseballHitterMenu(self):
+        menu_child = 1
+        self.backButton.destroy()
         self.baseballPitchersOption.destroy()
-        self.basketballOption.destroy()
-        self.volleyballOption.destroy()
-        self.basketballOption.destroy()
-        self.softballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.baseballHittersOption.destroy()
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 1
         self.constructButtons(choice)
@@ -123,17 +209,14 @@ class UI(Frame):
         # Background and Pack
         self.configure(background="white")
         self.pack()
-    def baseballMenuPitching(self):
+    def baseballPitchingMenu(self):
+        menu_child = 1
+        self.backButton.destroy()
         self.baseballPitchersOption.destroy()
-        self.basketballOption.destroy()
-        self.volleyballOption.destroy()
-        self.softballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.baseballHittersOption.destroy()
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 2
         self.constructButtons(choice)
@@ -143,16 +226,15 @@ class UI(Frame):
         self.pack()
 
     def softballMenu(self):
+        menu_child = 0 
         self.volleyballOption.destroy()
-        self.basketballOption.destroy()
+        self.baseballOption.destroy()
         self.softballOption.destroy()
-        self.baseballPitchersOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.soccerOption.destroy()
+        self.basketballOption.destroy()
+        self.backButton = Button(win, text="Back", command= lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 8
         self.constructButtons(choice)
@@ -162,16 +244,13 @@ class UI(Frame):
         self.pack()
 
     def womanSoccerMenu(self):
-        self.volleyballOption.destroy()
-        self.baseballPitchersOption.destroy()
-        self.softballOption.destroy()
-        self.basketballOption.destroy()
-        self.menSoccerOption.destroy()
+        menu_child = 2
+        self.backButton.destroy()
         self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.menSoccerOption.destroy()
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 3
         self.constructButtons(choice)
@@ -181,17 +260,13 @@ class UI(Frame):
         self.pack()
 
     def womanBasketballMenu(self):
-        self.volleyballOption.destroy()
-        self.baseballPitchersOption.destroy()
-        self.basketballOption.destroy()
-        # self.baseballOption.destroy()
-        self.softballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
+        menu_child = 3
+        self.backButton.destroy()
         self.womanBasketballOption.destroy()
         self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 6
         self.constructButtons(choice)
@@ -201,16 +276,13 @@ class UI(Frame):
         self.pack()
 
     def manBasketballMenu(self):
-        self.volleyballOption.destroy()
-        self.basketballOption.destroy()
-        # self.baseballOption.destroy()
-        self.softballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
+        menu_child = 3
+        self.backButton.destroy()
         self.womanBasketballOption.destroy()
         self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 7
         self.constructButtons(choice)
@@ -220,16 +292,13 @@ class UI(Frame):
         self.pack()
 
     def menSoccerMenu(self):
-        self.volleyballOption.destroy()
-        self.basketballOption.destroy()
-        # self.baseballOption.destroy()
-        self.softballOption.destroy()
-        self.menSoccerOption.destroy()
+        menu_child = 2
+        self.backButton.destroy()
         self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.menSoccerOption.destroy()
+        self.backButton = Button(win, text="Back", command=lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 4
         self.constructButtons(choice)
@@ -240,17 +309,16 @@ class UI(Frame):
 
 
     def volleyballMenu(self):
+        menu_child = 0 
         self.volleyballOption.destroy()
-        self.basketballOption.destroy()
-        self.baseballPitchersOption.destroy()
+        self.baseballOption.destroy()
         # self.baseballOption.destroy()
         self.softballOption.destroy()
-        self.menSoccerOption.destroy()
-        self.womanSoccerOption.destroy()
-        self.womanBasketballOption.destroy()
-        self.manBasketballOption.destroy()
-        self.backButton = Button(win, text="Back", command=self.destroyButtons, background='grey', fg='white',
-                                 width=4, height=4)
+        self.soccerOption.destroy()
+        self.basketballOption.destroy()
+        self.backButton = Button(win, text="Back", command= lambda: self.destroyButtons(menu_child))
+        self.img_backButton = PhotoImage(file="./back_button.gif")
+        self.backButton.config(image=self.img_backButton)
         self.backButton.pack(side=LEFT)
         choice = 5
         self.constructButtons(choice)
