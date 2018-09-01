@@ -20,39 +20,33 @@ class UI(Frame):
     newDocDirectory = []
 
     def constructButtons(self, choice):
-        self.openButton = Button(win, text="Open Word Document", command=self.openFile, background='blue',
-                                 fg='white', width=45, height=4)
+        self.openButton = Button(win, text="Open Word Document", command=self.openFile)
+        self.img_openButton = PhotoImage(file="./open_doc.gif")
+        self.openButton.config(image=self.img_openButton)
         self.openButton.pack()
-        self.saveAsButton = Button(win, text="Save As", command=self.saveFileAs, background='red', fg='white',
-                                   width=45,
-                                   height=4)
+        self.saveAsButton = Button(win, text="Save As", command=self.saveFileAs)
+        self.img_saveAsButton = PhotoImage(file="./save_as.gif")
+        self.saveAsButton.config(image=self.img_saveAsButton)
         self.saveAsButton.pack()
         if (choice == 1):
-            self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseball,
-                                        background='green', fg='white', width=45, height=4)
-
+            self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseball)
         if (choice == 2):
-            self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseballPitching,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Baseball Stats", command=self.convertBaseballPitching)
 
         if (choice == 3):
-            self.convertButton = Button(win, text="Convert Women's Soccer Stats", command=self.convertWomanSoccer,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Women's Soccer Stats", command=self.convertWomanSoccer)
         if (choice == 4):
-            self.convertButton = Button(win, text="Convert Men's Soccer Stats", command=self.convertMenSoccer,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Men's Soccer Stats", command=self.convertMenSoccer)
         if (choice == 5):
-            self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Volleyball Stats", command=self.convertVolleyball)
         if (choice == 6):
-            self.convertButton = Button(win, text="Convert Women's Basketball Stats", command=self.convertWomanBasketball,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Women's Basketball Stats", command=self.convertWomanBasketball)
         if (choice == 7):
-            self.convertButton = Button(win, text="Convert Men's Basketball Stats", command=self.convertManBasketball,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Men's Basketball Stats", command=self.convertManBasketball)
         if (choice == 8):
-            self.convertButton = Button(win, text="Convert Softball Stats", command=self.convertSoftball,
-                                        background='green', fg='white', width=45, height=4)
+            self.convertButton = Button(win, text="Convert Softball Stats", command=self.convertSoftball)
+        self.img_convertButton = PhotoImage(file="./convert.gif")
+        self.convertButton.config(image=self.img_convertButton)
         self.convertButton.pack()
 
     def destroyButtons(self, menu_child):
@@ -1108,7 +1102,7 @@ class UI(Frame):
         if gender == "woman":
             url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
         if gender == "man":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&sea=NAIMSO_2017&team=2623"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
@@ -2010,7 +2004,7 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&sea=NAIMSO_2017&team=2623"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -2028,6 +2022,10 @@ class UI(Frame):
                     name = name.get('title')
                     names.append(name.split(', ')[1])
                     print name.split(', ')[1]
+                    if name.split(', ')[1] == "Julio":
+                        print "PLEASE SKIP"
+                        break
+
 
                     GP = col[2].find(text=True)
                     print "GP: " + GP
@@ -2130,7 +2128,8 @@ class UI(Frame):
                                     #     continue
                                     # dic[name] = count
 
-                                if paragraph.text.__contains__(name.split(', ')[1]):
+                                if paragraph.text == name.split(' ')[1]:
+                                    
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
@@ -2156,6 +2155,7 @@ class UI(Frame):
                                         continue
                                     dic[name] = count
                         try:
+                            # flag = 0
                             workingSecondPage = section[3]
                             for row in workingSecondPage.rows:
                                 for cell in row.cells:
@@ -2163,21 +2163,22 @@ class UI(Frame):
                                         content.append(paragraph.text)
                                         switch = False
                                     if flag == 1:
-                                        print "G FOUND: " + G
+                                        print "G FOUND: " + G + " true: " + paragraph.text
                                         paragraph.text = G
                                         flag = flag + 1
                                         continue
                                     if flag == 2:
-                                        print "A FOUND: " + A
+                                        print "A FOUND: " + A + " true: " + paragraph.text
                                         paragraph.text = A
                                         flag = flag + 1
                                         continue
                                     if flag == 3:
-                                        print "Pts FOUND: " + Pts
+                                        print "Pts FOUND: " + Pts + " true: " + paragraph.text
                                         paragraph.text = Pts
                                         flag = flag + 1
                                         continue
                                     if flag > 3:
+                                        print "true: " + paragraph.text
                                         if paragraph.text.__contains__('GP-'):
                                             print 'GP found: ' + GP
                                             paragraph.text = "GP-" + GP
@@ -2221,7 +2222,7 @@ class UI(Frame):
                                         #     continue
                                         # dic[name] = count
 
-                                    if paragraph.text.__contains__(name.split(', ')[1]):
+                                    if paragraph.text == (name.split(', ')[1]):
                                         print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                         flag = flag + 1
                                         if paragraph.text == "Cheyenne":
@@ -2260,7 +2261,7 @@ class UI(Frame):
         print " Information might be wrong due to multiple first names appearing."
         newDocName = newDocDirectory + "/Men's Soccer Updated File.docx"
         document.save(newDocName)
-        self.convertGoalie(newDocName, gender)
+        # self.convertGoalie(newDocName, gender)
         sys.exit()
 
     def convertVolleyball(self):
@@ -2281,7 +2282,9 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&sea=NAIWVB_2017&team=2030"
+        # 2017: http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&sea=NAIWVB_2017&team=2030
+
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&team=2030&sea=NAIWVB_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
