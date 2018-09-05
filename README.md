@@ -1,4 +1,10 @@
 # Menlo-College-Sports-Statistics-Updater
+##Recompile Windows EXE with Py2exe
+Before running the command "python setup.py py2exe", be sure to you have all dependencies installed on your Windows machine.
+Use Pip Install if you do not have one of these dependencies:
+  1. pip install beautifulsoup4
+  2. pip install python-docx
+  
 ## Mac Startup Instructions
 To use for Mac and Linux OS, open the Terminal and type in the command "python SportsGrabber.py" after navigating to the Menlo-College-Sports-Statistics-Uploader folder.
 ## Windows Startup Instructions
