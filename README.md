@@ -1,5 +1,5 @@
 # Menlo-College-Sports-Statistics-Updater
-##Recompile Windows EXE with Py2exe
+Recompile Windows EXE with Py2exe
 Before running the command "python setup.py py2exe", be sure to you have all dependencies installed on your Windows machine.
 Use Pip Install if you do not have one of these dependencies:
   1. pip install beautifulsoup4
