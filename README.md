@@ -1,4 +1,12 @@
-# Menlo-College-Sports-Statistics-Updater
+# Menlo-College-Sports-Statistics-Update
+
+## Recompile Windows EXE with Py2exe
+Py2exe is a utility that allows python programs to be converted to Windows executable files. Download link available here: https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
+Before running the command "python setup.py py2exe", be sure to you have all dependencies installed on your Windows machine.
+Use Pip Install if you do not have one of these dependencies:
+  1. pip install beautifulsoup4
+  2. pip install python-docx
+  
 ## Mac Startup Instructions
 To use for Mac and Linux OS, open the Terminal and type in the command "python SportsGrabber.py" after navigating to the Menlo-College-Sports-Statistics-Uploader folder.
 ## Windows Startup Instructions
