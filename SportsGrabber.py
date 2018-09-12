@@ -2318,6 +2318,13 @@ class UI(Frame):
                 name = name.get('title')
                 names.append(name.split(', ')[1])
                 print name.split(', ')[1]
+                # if name.split(', ')[1] == "Brooke" or name.split(', ')[1] == 'Morgann':
+                #     continue
+                if name.split(', ')[1] == "Alyssa":
+                    print "ENDING PROGRAM"
+                    document.save(newDocDirectory + "/Volleyball New Updated File2.docx")
+                    sys.exit()
+
 
                 GP = col[1].find(text=True)
                 print "GP: " + GP
@@ -2372,6 +2379,7 @@ class UI(Frame):
                                 flag = flag + 1
                                 continue
                             if flag > 3:
+                                print "You are here4"
                                 if paragraph.text.__contains__('GP-'):
                                     print 'GP found'
                                     paragraph.text = "GP- " + GP
@@ -2410,11 +2418,15 @@ class UI(Frame):
                                     print "ROW COUNTER: " + str(row_counter)
                                     print "__conclude "+ name.split(', ')[1]
                                     # document.save(newDocDirectory + "/Updated File.docx")
-                                    if name.split(', ')[1] == "Sierra":
-                                        document.save(newDocDirectory + "/Volleyball New Updated File.docx")
+                                    if name.split(', ')[1] == "Pamela":
+                                        document.save(newDocDirectory + "/Volleyball New Updated File2.docx")
                                         sys.exit()
 
                                     break
+                            else:
+                                print "not there yet " + str(flag) 
+                                # flag = 0
+                                # break
 
                             if name.split(', ')[1] == 'K.':
                                 if paragraph.text == "Ka’imilani":
@@ -2457,6 +2469,25 @@ class UI(Frame):
                             #     if switch == True:
                             #         continue
                             #     dic[name] = count
+                            if paragraph.text == "Pamela":
+                                print "NOW2"
+                            if name.split(', ')[1] == "Pamela":
+                                print "NOW3"
+                            if name.split(', ')[1] == "Lucyanna":
+                                if paragraph.text == "Lucy":
+                                    flag = flag + 1
+                                scan = dic.keys()
+                                for index in scan:
+                                    if index.__contains__(name.split(', ')[1]):
+                                        switch = True
+                                        count = count + 1
+                                        dic[name] = count
+                                        count = 1
+
+                                if switch == True:
+                                    continue
+                                dic[name] = count
+
 
                             if paragraph.text == name.split(', ')[1]:
                                 print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
