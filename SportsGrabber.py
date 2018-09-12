@@ -2379,7 +2379,7 @@ class UI(Frame):
                                 flag = flag + 1
                                 continue
                             if flag > 3:
-                                print "You are here4"
+                                # print "You are here4"
                                 if paragraph.text.__contains__('GP-'):
                                     print 'GP found'
                                     paragraph.text = "GP- " + GP
@@ -2423,8 +2423,8 @@ class UI(Frame):
                                         sys.exit()
 
                                     break
-                            else:
-                                print "not there yet " + str(flag) 
+                            # else:
+                            #     print "not there yet " + str(flag) 
                                 # flag = 0
                                 # break
 
@@ -2469,10 +2469,10 @@ class UI(Frame):
                             #     if switch == True:
                             #         continue
                             #     dic[name] = count
-                            if paragraph.text == "Pamela":
-                                print "NOW2"
-                            if name.split(', ')[1] == "Pamela":
-                                print "NOW3"
+                            # if paragraph.text == "Pamela":
+                            #     print "NOW2"
+                            # if name.split(', ')[1] == "Pamela":
+                            #     print "NOW3"
                             if name.split(', ')[1] == "Lucyanna":
                                 if paragraph.text == "Lucy":
                                     flag = flag + 1
@@ -2491,12 +2491,12 @@ class UI(Frame):
 
                             if paragraph.text == name.split(', ')[1]:
                                 print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
-                                if name.split(', ')[1] == "Sierra":
-                                    print "NOW"
+                                # if name.split(', ')[1] == "Sierra":
+                                #     print "NOW"
                                 flag = flag + 1
                                 # self.write(name + '\n')
                                 print paragraph.text
-                                print "TEST2"
+                                # print "TEST2"
 
                                 # scan has a dictionary of all the names found on the website
                                 # the program will check whether or not a first name has already been recorded
