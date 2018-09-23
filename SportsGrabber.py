@@ -1115,8 +1115,9 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
+        #2017 link http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409
         if gender == "woman":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2018"
         if gender == "man":
             url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
         page = urllib2.urlopen(url)
@@ -1138,143 +1139,53 @@ class UI(Frame):
                     name = col[1].find('a', href=True)
                     name = name.get('title')
                     names.append(name.split(', ')[1])
-                    print name.split(', ')[1]
+                    if name.split(', ')[1] == "Paula":
+                        print "This is it"
+                        print name.split(', ')[1]
 
-                    GP = col[2].find(text=True)
-                    print "GP: " + GP
+                        GP = col[2].find(text=True)
+                        print "GP: " + GP
 
-                    #
-                    # average = field 1
-                    GS = col[3].find(text=True)
-                    print "GS: " + GS
+                        #
+                        # average = field 1
+                        GS = col[3].find(text=True)
+                        print "GS: " + GS
 
-                    Min = col[4].find(text=True)
-                    print "Min: " + Min
+                        Min = col[4].find(text=True)
+                        print "Min: " + Min
 
-                    GA = col[5].find(text=True)
-                    print "GA: " + GA
+                        GA = col[5].find(text=True)
+                        print "GA: " + GA
 
-                    GAAvg = col[6].find(text=True)
-                    print "GAAvg: " + GAAvg
+                        GAAvg = col[6].find(text=True)
+                        print "GAAvg: " + GAAvg
 
-                    SV = col[7].find(text=True)
-                    print "SV: " + SV
+                        SV = col[7].find(text=True)
+                        print "SV: " + SV
 
-                    Pct = col[8].find(text=True)
-                    print "Pct: " + Pct
+                        Pct = col[8].find(text=True)
+                        print "Pct: " + Pct
 
-                    W = col[9].find(text=True)
-                    print "W: " + W
+                        W = col[9].find(text=True)
+                        print "W: " + W
 
-                    L = col[10].find(text=True)
-                    print "L: " + L
+                        L = col[10].find(text=True)
+                        print "L: " + L
 
-                    T = col[11].find(text=True)
-                    print "T: " + T
+                        T = col[11].find(text=True)
+                        print "T: " + T
 
-                    SHO = col[12].find(text=True)
-                    print "SHO: " + SHO
+                        SHO = col[12].find(text=True)
+                        print "SHO: " + SHO
 
-                    try:
-                        print "TESTING"
-                        for row in working.rows:
-                            for cell in row.cells:
-                                for index, paragraph in enumerate(cell.paragraphs):
-                                    content.append(paragraph.text)
-                                    switch = False
-                                print str(flag)
-                                print paragraph.text
-                                print name.split(', ')[1]
-                                if flag == 1:
-                                    print "W FOUND: " + W
-                                    print "W: " + paragraph.text
-                                    paragraph.text = W
-                                    flag = flag + 1
-                                    continue
-                                if flag == 2:
-                                    print "L FOUND: " + L
-                                    print "L: " + paragraph.text
-                                    paragraph.text = L
-                                    flag = flag + 1
-                                    continue
-                                if flag == 3:
-                                    print "T FOUND: " + T
-                                    print "T: " + paragraph.text
-                                    paragraph.text = T
-                                    flag = flag + 1
-                                    continue
-                                if flag > 3:
-                                    if paragraph.text.__contains__('GP-'):
-                                        print 'GP found: ' + GP
-                                        paragraph.text = "GP-" + GP
-
-                                    if paragraph.text.__contains__('GS-'):
-                                        print 'GS found: ' + GS
-                                        paragraph.text = "GS-" + GS
-
-                                    if paragraph.text.__contains__('Min-'):
-                                        print 'Min found: ' + Min
-                                        paragraph.text = "Min-" + Min
-
-                                    if paragraph.text.__contains__('GA-'):
-                                        print 'GA found: ' + GA
-                                        paragraph.text = "GA-" + GA
-
-                                    if paragraph.text.__contains__('GAAvg-'):
-                                        print 'GAAvg found: ' + GAAvg
-                                        paragraph.text = "GAAvg-" + GAAvg
-
-                                    if paragraph.text.__contains__('SV-'):
-                                        print 'SV found: ' + SV
-                                        paragraph.text = "SV-" + SV
-
-                                    if paragraph.text.__contains__('Pct-'):
-                                        print 'Pct found: ' + Pct
-                                        paragraph.text = "Pct-" + Pct
-
-                                    if paragraph.text.__contains__('SHO-'):
-                                        print 'SHO found: ' + SHO
-                                        paragraph.text = "SHO-" + SHO
-                                        endGoalieCounter = endGoalieCounter + 1
-                                        if endGoalieCounter == 2:
-                                            print "END OF GOAL"
-                                            document.save(newDocDirectory + "/Updated Filev2.docx")
-                                            sys.exit()
-                                        flag = 0
-                                        print "ROW COUNTER: " + str(row_counter)
-                                        break
-
-                                if paragraph.text.__contains__(name.split(', ')[1]):
-                                    print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
-                                    flag = flag + 1
-                                    print paragraph.text
-                                    print "TEST2"
-
-                                    # scan has a dictionary of all the names found on the website
-                                    # the program will check whether or not a first name has already been recorded
-                                    # if it has, then the counter will go up from 1 to 2
-                                    # if the counter is more than 1, then the program will have to match the specific name
-                                    # from the document with a matching number
-                                    scan = dic.keys()
-                                    for index in scan:
-                                        if index.__contains__(name.split(', ')[1]):
-                                            switch = True
-                                            count = count + 1
-                                            dic[name] = count
-                                            count = 1
-
-                                    if switch == True:
-                                        continue
-                                    dic[name] = count
-                                    # paragraph.text[index + 1] = '.555'
-                                    # print paragraph.text[index + 1]
                         try:
-                            workingSecondPage = section[3]
-                            for row in workingSecondPage.rows:
+                            print "TESTING"
+                            for row in working.rows:
                                 for cell in row.cells:
                                     for index, paragraph in enumerate(cell.paragraphs):
                                         content.append(paragraph.text)
                                         switch = False
+                                    print str(flag)
                                     print paragraph.text
                                     print name.split(', ')[1]
                                     if flag == 1:
@@ -1334,7 +1245,6 @@ class UI(Frame):
                                                 sys.exit()
                                             flag = 0
                                             print "ROW COUNTER: " + str(row_counter)
-
                                             break
 
                                     if paragraph.text.__contains__(name.split(', ')[1]):
@@ -1359,10 +1269,103 @@ class UI(Frame):
                                         if switch == True:
                                             continue
                                         dic[name] = count
-                        except:
-                            print "non men"
-                    except IndexError:
-                        print "list index out of range"
+                                        # paragraph.text[index + 1] = '.555'
+                                        # print paragraph.text[index + 1]
+                            try:
+                                workingSecondPage = section[3]
+                                for row in workingSecondPage.rows:
+                                    for cell in row.cells:
+                                        for index, paragraph in enumerate(cell.paragraphs):
+                                            content.append(paragraph.text)
+                                            switch = False
+                                        print paragraph.text
+                                        print name.split(', ')[1]
+                                        if flag == 1:
+                                            print "W FOUND: " + W
+                                            print "W: " + paragraph.text
+                                            paragraph.text = W
+                                            flag = flag + 1
+                                            continue
+                                        if flag == 2:
+                                            print "L FOUND: " + L
+                                            print "L: " + paragraph.text
+                                            paragraph.text = L
+                                            flag = flag + 1
+                                            continue
+                                        if flag == 3:
+                                            print "T FOUND: " + T
+                                            print "T: " + paragraph.text
+                                            paragraph.text = T
+                                            flag = flag + 1
+                                            continue
+                                        if flag > 3:
+                                            if paragraph.text.__contains__('GP-'):
+                                                print 'GP found: ' + GP
+                                                paragraph.text = "GP-" + GP
+
+                                            if paragraph.text.__contains__('GS-'):
+                                                print 'GS found: ' + GS
+                                                paragraph.text = "GS-" + GS
+
+                                            if paragraph.text.__contains__('Min-'):
+                                                print 'Min found: ' + Min
+                                                paragraph.text = "Min-" + Min
+
+                                            if paragraph.text.__contains__('GA-'):
+                                                print 'GA found: ' + GA
+                                                paragraph.text = "GA-" + GA
+
+                                            if paragraph.text.__contains__('GAAvg-'):
+                                                print 'GAAvg found: ' + GAAvg
+                                                paragraph.text = "GAAvg-" + GAAvg
+
+                                            if paragraph.text.__contains__('SV-'):
+                                                print 'SV found: ' + SV
+                                                paragraph.text = "SV-" + SV
+
+                                            if paragraph.text.__contains__('Pct-'):
+                                                print 'Pct found: ' + Pct
+                                                paragraph.text = "Pct-" + Pct
+
+                                            if paragraph.text.__contains__('SHO-'):
+                                                print 'SHO found: ' + SHO
+                                                paragraph.text = "SHO-" + SHO
+                                                endGoalieCounter = endGoalieCounter + 1
+                                                if endGoalieCounter == 2:
+                                                    print "END OF GOAL"
+                                                    document.save(newDocDirectory + "/Updated Filev2.docx")
+                                                    sys.exit()
+                                                flag = 0
+                                                print "ROW COUNTER: " + str(row_counter)
+
+                                                break
+
+                                        if paragraph.text.__contains__(name.split(', ')[1]):
+                                            print "NAMES2: " + paragraph.text + " " + name.split(', ')[1]
+                                            flag = flag + 1
+                                            print paragraph.text
+                                            print "TEST2"
+
+                                            # scan has a dictionary of all the names found on the website
+                                            # the program will check whether or not a first name has already been recorded
+                                            # if it has, then the counter will go up from 1 to 2
+                                            # if the counter is more than 1, then the program will have to match the specific name
+                                            # from the document with a matching number
+                                            scan = dic.keys()
+                                            for index in scan:
+                                                if index.__contains__(name.split(', ')[1]):
+                                                    switch = True
+                                                    count = count + 1
+                                                    dic[name] = count
+                                                    count = 1
+
+                                            if switch == True:
+                                                continue
+                                            dic[name] = count
+                            except:
+                                print "non men"
+                        except IndexError:
+                            print "list index out of range"
                 except:
                     print "NoneType' object has no attribute 'get"
 
@@ -1396,8 +1399,9 @@ class UI(Frame):
         from bs4 import BeautifulSoup
         import urllib2
         #import pandas as pd
-        # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409"
+        # download html from link 
+        # 2017 http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -1405,6 +1409,7 @@ class UI(Frame):
         count = 1
         dic = {}
         row_counter = 0
+        goalieActivate = 0
         for row in table.find_all('tr')[1:]:
             col = row.find_all('td')
             row_counter = row_counter + 1
@@ -1414,6 +1419,9 @@ class UI(Frame):
                     name = col[1].find('a', href=True)
                     name = name.get('title')
                     names.append(name.split(', ')[1])
+                    if name.split(', ')[1] == "Paula":
+                        goalieActivate = 1
+                        continue
                     print name.split(', ')[1]
 
                     GP = col[2].find(text=True)
@@ -1555,7 +1563,8 @@ class UI(Frame):
         print " Information might be wrong due to multiple first names appearing."
         newDocName = newDocDirectory + "/Women's Soccer Updated File.docx"
         document.save(newDocName)
-        self.convertGoalie(newDocName, gender)
+        if goalieActivate == 1:
+            self.convertGoalie(newDocName, gender)
         sys.exit()
 
     def convertWomanBasketball(self):
