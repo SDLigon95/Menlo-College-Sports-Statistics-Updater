@@ -2037,6 +2037,7 @@ class UI(Frame):
         count = 1
         dic = {}
         row_counter = 0
+        goalieActivate = 0
         for row in table.find_all('tr')[1:]:
             col = row.find_all('td')
             row_counter = row_counter + 1
@@ -2047,9 +2048,10 @@ class UI(Frame):
                     name = name.get('title')
                     names.append(name.split(', ')[1])
                     print name.split(', ')[1]
-                    if name.split(', ')[1] == "Julio":
+                    if name.split(', ')[1] == "Andres" or name.split(', ')[1] == "Armando" or name.split(', ')[1] == "Juan":
                         print "PLEASE SKIP"
-                        break
+                        goalieActivate = 1
+                        continue
 
 
                     GP = col[2].find(text=True)
@@ -2181,6 +2183,10 @@ class UI(Frame):
                                     dic[name] = count
                         try:
                             # flag = 0
+                            
+                            print "Next Page Starting + " + str(flag)
+                            flag = 0
+                            print "Next Page Starting + " + str(flag)
                             workingSecondPage = section[3]
                             for row in workingSecondPage.rows:
                                 for cell in row.cells:
@@ -2252,6 +2258,10 @@ class UI(Frame):
                                         flag = flag + 1
                                         if paragraph.text == "Cheyenne":
                                             print "LOOK HERE NOW"
+                                        if paragraph.text == "David":
+                                            print "LOOK HERE NOW2"
+                                            flag = flag + 1
+                                            goalieActivate = 1
                                         # self.write(name + '\n')
                                         print paragraph.text
                                         print "TEST2"
@@ -2286,6 +2296,7 @@ class UI(Frame):
         print " Information might be wrong due to multiple first names appearing."
         newDocName = newDocDirectory + "/Men's Soccer Updated File.docx"
         document.save(newDocName)
+        # if goalieActivate == 1:
         # self.convertGoalie(newDocName, gender)
         sys.exit()
 
