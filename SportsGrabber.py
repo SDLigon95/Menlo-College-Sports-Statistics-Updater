@@ -1858,8 +1858,15 @@ class UI(Frame):
     def convertWomanBasketball(self):
         import sys
         from docx import Document
+        from docx.shared import Pt
         document = Document(oldDocName)
         tables = document.tables
+        #
+        style = document.styles['Normal']
+        font = style.font
+        font.name = 'Calibri (Body)'
+        font.size = Pt(8)
+        #
         section = []
         i = 0
         for table in tables:
@@ -1944,21 +1951,21 @@ class UI(Frame):
                                 for index, paragraph in enumerate(cell.paragraphs):
                                     content.append(paragraph.text)
                                     switch = False
-                                if flag == 1:
+                                if flag == 1 and paragraph.text.__contains__("P1:"): 
                                     print "PCT1 FOUND: " + PCT1
-                                    paragraph.text = PCT1
+                                    paragraph.text = "P1:" + PCT1
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
-                                if flag == 2:
+                                if flag == 2 and paragraph.text.__contains__("P2:"): 
                                     print "PCT2 FOUND: " + PCT2
-                                    paragraph.text = PCT2
+                                    paragraph.text = "P2:" + PCT2
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
-                                if flag == 3:
+                                if flag == 3 and paragraph.text.__contains__("P3:"): 
                                     print "PCT3 FOUND: " + PCT3
-                                    paragraph.text = PCT3
+                                    paragraph.text = "P3:" + PCT3
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
@@ -2022,7 +2029,7 @@ class UI(Frame):
                                         #     continue
                                         # dic[name] = count
 
-                                if paragraph.text.__contains__(name.split(', ')[1]):
+                                if paragraph.text == (name.split(', ')[1]):
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
@@ -2070,8 +2077,15 @@ class UI(Frame):
     def convertManBasketball(self):
         import sys
         from docx import Document
+        from docx.shared import Pt
         document = Document(oldDocName)
         tables = document.tables
+        #
+        style = document.styles['Normal']
+        font = style.font
+        font.name = 'Calibri (Body)'
+        #
+        
         section = []
         i = 0
         for table in tables:
@@ -2084,7 +2098,8 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBB&sea=NAIMBB_2017&team=556"
+        # http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBB&sea=NAIMBB_2017&team=556
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBB&team=556&sea=NAIMBB_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -2156,26 +2171,32 @@ class UI(Frame):
                                 for index, paragraph in enumerate(cell.paragraphs):
                                     content.append(paragraph.text)
                                     switch = False
-                                if flag == 1:
-                                    print "PCT1 FOUND: " + PCT1
-                                    paragraph.text = PCT1
+                               
+                                if flag == 1 and paragraph.text.__contains__("P1:"): 
+                                    # paragraph.style = document.styles['Normal']
+                                    font.size = Pt(8)
+                                    print "PCT1 FOUND: " + PCT1 + " " + paragraph.text
+                                    paragraph.text = "P1:" + PCT1
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
-                                if flag == 2:
-                                    print "PCT2 FOUND: " + PCT2
-                                    paragraph.text = PCT2
+                                if flag == 2 and paragraph.text.__contains__("P2:"):
+                                    
+                                    print "PCT2 FOUND: " + PCT2 + " " + paragraph.text
+                                    paragraph.text = "P2:" + PCT2
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
-                                if flag == 3:
-                                    print "PCT3 FOUND: " + PCT3
-                                    paragraph.text = PCT3
+                                if flag == 3 and paragraph.text.__contains__("P3:"):
+                                    
+                                    print "PCT3 FOUND: " + PCT3 + " " + paragraph.text
+                                    paragraph.text = "P3:" + PCT3
                                     flag = flag + 1
                                     print paragraph.text
                                     continue
                                 if flag > 3:
                                     # print paragraph.text
+                                    
                                     if paragraph.text.__contains__('GP-'):
                                         print 'GP found: ' + GP
                                         paragraph.text = "GP-" + GP
@@ -2234,32 +2255,32 @@ class UI(Frame):
                                         #     continue
                                         # dic[name] = count
                                 # "Website ->" "N'Jai" "Word Doc ->" "N’Jai" 
-                                if paragraph.text == "N’Jai" and name.split(', ')[1] == "N'Jai":
-                                    print "Special Instance"
-                                    #print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
-                                    flag = flag + 1
-                                    #print paragraph.text
-                                    #print "TEST2"
+                                # if paragraph.text == "Corey" and name.split(', ')[1] == "Corey":
+                                #     print "Special Instance"
+                                #     #print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
+                                #     flag = flag + 1
+                                #     #print paragraph.text
+                                #     #print "TEST2"
 
-                                    # scan has a dictionary of all the names found on the website
-                                    # the program will check whether or not a first name has already been recorded
-                                    # if it has, then the counter will go up from 1 to 2
-                                    # if the counter is more than 1, then the program will have to match the specific name
-                                    # from the document with a matching number
-                                    scan = dic.keys()
-                                    for index in scan:
-                                        if index.__contains__(name.split(', ')[1]):
-                                            switch = True
-                                            count = count + 1
-                                            dic[name] = count
-                                            count = 1
+                                #     # scan has a dictionary of all the names found on the website
+                                #     # the program will check whether or not a first name has already been recorded
+                                #     # if it has, then the counter will go up from 1 to 2
+                                #     # if the counter is more than 1, then the program will have to match the specific name
+                                #     # from the document with a matching number
+                                #     scan = dic.keys()
+                                #     for index in scan:
+                                #         if index.__contains__(name.split(', ')[1]):
+                                #             switch = True
+                                #             count = count + 1
+                                #             dic[name] = count
+                                #             count = 1
 
-                                    if switch == True:
-                                        continue
-                                    dic[name] = count
+                                #     if switch == True:
+                                #         continue
+                                #     dic[name] = count
 
 
-                                if paragraph.text.__contains__(name.split(', ')[1]):
+                                if paragraph.text == (name.split(', ')[1]):
                                     print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                     flag = flag + 1
                                     if paragraph.text == "Cheyenne":
@@ -2298,6 +2319,7 @@ class UI(Frame):
         newDocName = newDocDirectory + "/Men's Basketball Updated File.docx"
         document.save(newDocName)
         sys.exit()
+
 
     def convertMenSoccer(self):
         # Reading docx file
