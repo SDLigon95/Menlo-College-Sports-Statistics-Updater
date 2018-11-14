@@ -1879,7 +1879,7 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBB&sea=NAIWBB_2017&team=233"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBB&team=233&sea=NAIWBB_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
