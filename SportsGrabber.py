@@ -2632,8 +2632,9 @@ class UI(Frame):
         #import pandas as pd
         # download html from link
         # 2017: http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&sea=NAIWVB_2017&team=2030
+        # woman's vb http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&team=2030&sea=NAIWVB_2018
 
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WVB&team=2030&sea=NAIWVB_2018"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MVB&sea=NAIMVB_2019&team=21043"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -2751,7 +2752,7 @@ class UI(Frame):
                                     print "ROW COUNTER: " + str(row_counter)
                                     print "__conclude "+ name.split(', ')[1]
                                     # document.save(newDocDirectory + "/Updated File.docx")
-                                    if name.split(', ')[1] == "Pamela":
+                                    if name.split(', ')[1] == "Edin":
                                         document.save(newDocDirectory + "/Volleyball New Updated File2.docx")
                                         sys.exit()
 
