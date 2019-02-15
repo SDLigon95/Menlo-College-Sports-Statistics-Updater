@@ -382,8 +382,8 @@ class UI(Frame):
             from bs4 import BeautifulSoup
             import urllib2
         # import pandas as pd
-            # download html from link
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&sea=NAIWBA_2018&team=1501"
+            # download html from link 2018 http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&sea=NAIWBA_2018&team=1501
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&team=1501&sea=NAIWBA_2019"
             page = urllib2.urlopen(url)
             soup = BeautifulSoup(page, "html.parser")
             table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -589,7 +589,7 @@ class UI(Frame):
             import urllib2
         # import pandas as pd
             # download html from link
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&sea=NAIWBA_2018&team=1501"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WBA&team=1501&sea=NAIWBA_2019"
             page = urllib2.urlopen(url)
             soup = BeautifulSoup(page, "html.parser")
             table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
@@ -754,8 +754,8 @@ class UI(Frame):
         from bs4 import BeautifulSoup
         import urllib2
        # import pandas as pd
-        # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2018&team=9101"
+        # download html from link 2018 http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MBA&sea=NAIMBA_2018&team=9101
+        url = ""
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
