@@ -469,7 +469,7 @@ class UI(Frame):
                                         flag = flag + 1
                                         continue
                                     if flag > 3:
-                                        print "____*->" + paragraph.text + '\n'
+                                        print "____*->" + paragraph.text.encode('utf-8') + '\n'
                                         # print "FLAG==" + str(flag) + " "+ name
                                         if name.split(' ')[1].__contains__("Sarah"):
                                             print "This is something: " +  name.split(' ')[1]
