@@ -2747,22 +2747,88 @@ class UI(Frame):
 
                                 if paragraph.text.startswith('DIG-'):
                                     print 'DIG found'
-                                    paragraph.text = "DIG- " + DIG
+                                    paragraph.text = "DIG - " + DIG
                                     print paragraph.text
                                 
-                                if paragraph.text.startswith('PCT-'):
-                                    print 'PCT found'
-                                    paragraph.text = "PCT- " + A
+                                if paragraph.startswith('PCT-')
+                                    print 'DIG found'
+                                    paragraph.text = "DIG - " + DIG
                                     print paragraph.text
                                     flag = 0
                                     print "ROW COUNTER: " + str(row_counter)
                                     print "__conclude "+ name.split(', ')[1]
-                                    if name.split(', ')[1] == "Pamela":
-                                        document.save(newDocDirectory + "/Women Volleyball New Updated File2.docx")
-                                        sys.exit()
+                                    # document.save(newDocDirectory + "/Updated File.docx")
+                                    # if name.split(', ')[1] == "Edin":
+                                    #     document.save(newDocDirectory + "/Women Volleyball New Updated File2.docx")
+                                    #     sys.exit()
+
                                     break
-                            
-                          
+                            # else:
+                            #     print "not there yet " + str(flag) 
+                                # flag = 0
+                                # break
+
+                            if name.split(', ')[1] == 'K.':
+                                if paragraph.text == "Ka’imilani":
+                                    flag = flag + 1
+                                # scan has a dictionary of all the names found on the website
+                                # the program will check whether or not a first name has already been recorded
+                                # if it has, then the counter will go up from 1 to 2
+                                # if the counter is more than 1, then the program will have to match the specific name
+                                # from the document with a matching number
+                                scan = dic.keys()
+                                for index in scan:
+                                    if index.__contains__(name.split(', ')[1]):
+                                        switch = True
+                                        count = count + 1
+                                        dic[name] = count
+                                        count = 1
+
+                                if switch == True:
+                                    continue
+                                dic[name] = count
+
+                            # if name.split(', ')[0] == '10 SCOTT':
+                            #     print "SCOTT PASSED"
+                            #     if paragraph.text == "Jaden":
+                            #         flag = flag + 1
+
+                            #     # scan has a dictionary of all the names found on the website
+                            #     # the program will check whether or not a first name has already been recorded
+                            #     # if it has, then the counter will go up from 1 to 2
+                            #     # if the counter is more than 1, then the program will have to match the specific name
+                            #     # from the document with a matching number
+                            #     scan = dic.keys()
+                            #     for index in scan:
+                            #         if index.__contains__(name.split(', ')[1]):
+                            #             switch = True
+                            #             count = count + 1
+                            #             dic[name] = count
+                            #             count = 1
+
+                            #     if switch == True:
+                            #         continue
+                            #     dic[name] = count
+                            # if paragraph.text == "Pamela":
+                            #     print "NOW2"
+                            # if name.split(', ')[1] == "Pamela":
+                            #     print "NOW3"
+                            if name.split(', ')[1] == "Lucyanna":
+                                if paragraph.text == "Lucy":
+                                    flag = flag + 1
+                                scan = dic.keys()
+                                for index in scan:
+                                    if index.__contains__(name.split(', ')[1]):
+                                        switch = True
+                                        count = count + 1
+                                        dic[name] = count
+                                        count = 1
+
+                                if switch == True:
+                                    continue
+                                dic[name] = count
+
+
                             if paragraph.text == name.split(', ')[1]:
                                 print "NAMES: " + paragraph.text + " " + name.split(', ')[1]
                                 # if name.split(', ')[1] == "Sierra":
