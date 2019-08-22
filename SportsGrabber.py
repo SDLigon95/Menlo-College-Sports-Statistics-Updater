@@ -2618,7 +2618,12 @@ class UI(Frame):
         # Reading docx file
         import sys
         from docx import Document
+        from docx.shared import Pt
         document = Document(oldDocName)
+        style = document.styles['Normal']
+        font = style.font
+        font.name = "Calibri (Bold)"
+        font.size = Pt(7)
         tables = document.tables
         section = []
         i = 0
@@ -2669,6 +2674,9 @@ class UI(Frame):
 
                 K = col[3].find(text=True)
                 print "K: " + K
+
+                PCT = col[7].find(text=True)
+                print "PCT: " + PCT
 
                 A = col[8].find(text=True)
                 print "A: " + A
@@ -2752,7 +2760,8 @@ class UI(Frame):
                                 
                                 if paragraph.text.startswith('PCT-'):
                                     print 'PCT found'
-                                    paragraph.text = "PCT- " + A
+                                    paragraph.style = document.styles['Normal'] 
+                                    paragraph.text = "PCT- " + PCT
                                     print paragraph.text
                                     flag = 0
                                     print "ROW COUNTER: " + str(row_counter)
