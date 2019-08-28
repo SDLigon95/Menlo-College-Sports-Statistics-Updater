@@ -1406,9 +1406,9 @@ class UI(Frame):
         # download html from link
         #2017 link http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409
         if gender == "woman":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2019"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2018"
         if gender == "man":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2019"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
@@ -2340,7 +2340,7 @@ class UI(Frame):
         import urllib2
         #import pandas as pd
         # download html from link
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2019"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -2359,7 +2359,7 @@ class UI(Frame):
                     name = name.get('title')
                     names.append(name.split(', ')[1])
                     print name.split(', ')[1]
-                    if name.split(', ')[1] == "Andres" or name.split(', ')[1] == "Esteban" or name.split(', ')[1] == "Brent":
+                    if name.split(', ')[1] == "Andres" or name.split(', ')[1] == "Armando" or name.split(', ')[1] == "Juan":
                         print "PLEASE SKIP"
                         goalieActivate = 1
                         goalieName = name.split(', ')[1]
@@ -2406,17 +2406,17 @@ class UI(Frame):
                                     content.append(paragraph.text)
                                     switch = False
                                 if flag == 1:
-                                    print "G FOUND: " + G + " true: " + paragraph.text
+                                    print "G FOUND: " + G
                                     paragraph.text = G
                                     flag = flag + 1
                                     continue
                                 if flag == 2:
-                                    print "A FOUND: " + A + " true: " + paragraph.text
+                                    print "A FOUND: " + A
                                     paragraph.text = A
                                     flag = flag + 1
                                     continue
                                 if flag == 3:
-                                    print "Pts FOUND: " + Pts + " true: " + paragraph.text
+                                    print "Pts FOUND: " + Pts
                                     paragraph.text = Pts
                                     flag = flag + 1
                                     continue
@@ -2512,7 +2512,7 @@ class UI(Frame):
                                         paragraph.text = G
                                         flag = flag + 1
                                         continue
-                                    if flag == 2 and paragraph.text == "A-":
+                                    if flag == 2:
                                         print "A FOUND: " + A + " true: " + paragraph.text
                                         paragraph.text = A
                                         flag = flag + 1
