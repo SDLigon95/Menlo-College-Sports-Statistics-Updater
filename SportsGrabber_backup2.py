@@ -2514,6 +2514,8 @@ class UI(Frame):
                                         switch = False
                                     if flag == 1:
                                         print name + " testing for David"
+                                    if paragraph.text.startswith ("G-"):
+                                        print "FLAG: " + str(flag)
                                     if flag == 1 and paragraph.text.startswith ("G-"):
                                         print "G FOUND: " + G + " true: " + paragraph.text
                                         paragraph.text = G
