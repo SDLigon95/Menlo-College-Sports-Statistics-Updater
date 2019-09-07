@@ -1118,9 +1118,9 @@ class UI(Frame):
         # download html from link
         #2017 link http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409
         if gender == "woman":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2018"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2019"
         if gender == "man":
-            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2018"
+            url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=MSO&team=2623&sea=NAIMSO_2019"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find_all("table", {"class": "gridViewReportBuilderWide"})[1]
@@ -1140,7 +1140,7 @@ class UI(Frame):
                     name = col[1].find('a', href=True)
                     name = name.get('title')
                     names.append(name.split(', ')[1])
-                    if name.split(', ')[1] == "Paula":
+                    if name.split(', ')[1] == "Michelle":
                         print "This is it"
                         print name.split(', ')[1]
 
@@ -1675,8 +1675,13 @@ class UI(Frame):
         gender = "woman"
         import sys
         from docx import Document
+        from docx.shared import Pt
         document = Document(oldDocName)
         tables = document.tables
+        style = document.styles['Normal']
+        font = style.font
+        font.name = "Calibri (Bold)"
+        font.size = Pt(7)
         section = []
         i = 0
         for table in tables:
@@ -1690,7 +1695,7 @@ class UI(Frame):
         #import pandas as pd
         # download html from link 
         # 2017 http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&sea=NAIWSO_2017&team=2409
-        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2018"
+        url = "http://www.dakstats.com/WebSync/Pages/Team/IndividualStats.aspx?association=10&sg=WSO&team=2409&sea=NAIWSO_2019"
         page = urllib2.urlopen(url)
         soup = BeautifulSoup(page, "html.parser")
         table = soup.find("table", {"class": "gridViewReportBuilderWide"})
@@ -1708,7 +1713,7 @@ class UI(Frame):
                     name = col[1].find('a', href=True)
                     name = name.get('title')
                     names.append(name.split(', ')[1])
-                    if name.split(', ')[1] == "Paula":
+                    if name.split(', ')[1] == "Michelle":
                         goalieActivate = 1
                         continue
                     print name.split(', ')[1]

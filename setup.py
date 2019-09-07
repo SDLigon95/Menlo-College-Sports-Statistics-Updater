@@ -7,18 +7,15 @@ Usage:
 
 from setuptools import setup
 
-
 APP = ['SportsGrabber.py']
-DATA_FILES = ['./back_button.gif','./baseball_hitter.gif','./baseball_pitcher.gif','./baseball.gif',
-'./basketball.gif','./convert.gif','./men_basketball.gif','./men_soccer.gif','./open_doc.gif','./save_as.gif',
-'./soccer.gif','./softball.gif','./volleyball.gif','./women_basketball.gif','./women_soccer.gif']
+DATA_FILES = ['back_button.gif','baseball.gif','baseball_PNG19000.gif','baseball_hitter.gif','baseball_pitcher.gif','basketball.gif','convert.gif','men_basketball.gif','men_soccer.gif','open_doc.gif','save_as.gif','soccer.gif','softball.gif','volleyball.gif','women_basketball.gif','women_soccer.gif']
+PKGS = ['python-docx']
 OPTIONS = {
-            'argv_emulation': False,
-            'includes': ['lxml.etree', 'lxml._elementpath']
-        }
+    'argv_emulation': False,
+    'packages': ['python-docx']
+}
 
 setup(
-    console=['SportsGrabber.py'],
     app=APP,
     data_files=DATA_FILES,
     options={'py2app': OPTIONS},

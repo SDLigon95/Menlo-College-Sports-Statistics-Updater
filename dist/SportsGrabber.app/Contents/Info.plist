@@ -41,18 +41,22 @@
 	<key>PyOptions</key>
 	<dict>
 		<key>alias</key>
-		<false/>
+		<true/>
 		<key>argv_emulation</key>
 		<false/>
 		<key>emulate_shell_environment</key>
-		<true/>
+		<false/>
 		<key>no_chdir</key>
 		<false/>
 		<key>prefer_ppc</key>
 		<false/>
 		<key>site_packages</key>
 		<false/>
+		<key>use_faulthandler</key>
+		<false/>
 		<key>use_pythonpath</key>
+		<false/>
+		<key>verbose</key>
 		<false/>
 	</dict>
 	<key>PyResourcePackages</key>
@@ -61,6 +65,7 @@
 	<key>PyRuntimeLocations</key>
 	<array>
 		<string>@executable_path/../Frameworks/Python.framework/Versions/2.7/Python</string>
+		<string>/Library/Frameworks/Python.framework/Versions/2.7/Python</string>
 	</array>
 	<key>PythonInfoDict</key>
 	<dict>
@@ -74,11 +79,11 @@
 		<key>py2app</key>
 		<dict>
 			<key>alias</key>
-			<false/>
+			<true/>
 			<key>template</key>
 			<string>app</string>
 			<key>version</key>
-			<string>0.7.3</string>
+			<string>0.19</string>
 		</dict>
 	</dict>
 </dict>
